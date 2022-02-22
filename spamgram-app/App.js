@@ -1,7 +1,7 @@
-import { StyleSheet, Text, View, Pressable, Button, Dimensions, Image } from 'react-native';
+import { StyleSheet, Text, View, TouchableHighlight, Pressable, Button, Dimensions, Image } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { RFPercentage, RFValue } from "react-native-responsive-fontsize";
+import { RFValue } from "react-native-responsive-fontsize";
 
 const {
   width: SCREEN_WIDTH,
@@ -22,15 +22,15 @@ function HomeScreen({ navigation }) {
         <Text style={styles.subheader}>Pick a room to begin!</Text>
       </View>
       <View>
-        <Pressable onPress={() => navigation.navigate('Details')} style={styles.menuOption}>
+        <TouchableHighlight onPress={() => navigation.navigate('Details')} style={styles.menuOption} underlayColor={'#000'}>
           <Text style={styles.menuOptionText}>Iowa State University</Text>
-        </Pressable>
-        <Pressable onPress={() => navigation.navigate('Details')} style={styles.menuOption}>
+        </TouchableHighlight>
+        <TouchableHighlight onPress={() => navigation.navigate('Details')} style={styles.menuOption} underlayColor={'#000'}>
           <Text style={styles.menuOptionText}>Ames</Text>
-        </Pressable>
-        <Pressable onPress={() => navigation.navigate('Details')} style={styles.menuOption}>
+        </TouchableHighlight>
+        <TouchableHighlight onPress={() => navigation.navigate('Details')} style={styles.menuOption} underlayColor={'#000'}>
           <Text style={styles.menuOptionText}>Iowa</Text>
-        </Pressable>
+        </TouchableHighlight>
       </View>
     </View>
   )
@@ -60,7 +60,10 @@ export default function App() {
     <NavigationContainer>
       <Stack.Navigator>
         <Stack.Screen name="Home" component={HomeScreen} options={{
-          title: 'Overview'
+          headerStyle: {
+            backgroundColor: '#262626',
+            elevation: 0
+          }
         }}/>
         <Stack.Screen name="Details" component={DetailsScreen} />
       </Stack.Navigator>
