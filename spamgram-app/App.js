@@ -1,40 +1,14 @@
-import { StyleSheet, Text, View, Pressable, Button, Dimensions, Image } from 'react-native';
+import { StyleSheet, Text, View, TouchableHighlight, Pressable, Button, Dimensions, Image } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { RFPercentage, RFValue } from "react-native-responsive-fontsize";
+import { RFValue } from "react-native-responsive-fontsize";
+import HomeScreen from './screens/HomeScreen';
+import ChatScreen from './screens/ChatScreen';
 
 const {
   width: SCREEN_WIDTH,
   height: SCREEN_HEIGHT
 } = Dimensions.get('window');
-
-function HomeScreen({ navigation }) {
-  return (
-    <View style={{
-      flex: 1,
-      alignItems: 'center',
-      justifyContent: 'center',
-      backgroundColor: '#262626'
-    }}>
-      <View style={styles.headSection}>
-        <Text style={styles.header}>Welcome PurplePanda3!</Text>
-        <Image source={require('./assets/star.png')} />
-        <Text style={styles.subheader}>Pick a room to begin!</Text>
-      </View>
-      <View>
-        <Pressable onPress={() => navigation.navigate('Details')} style={styles.menuOption}>
-          <Text style={styles.menuOptionText}>Iowa State University</Text>
-        </Pressable>
-        <Pressable onPress={() => navigation.navigate('Details')} style={styles.menuOption}>
-          <Text style={styles.menuOptionText}>Ames</Text>
-        </Pressable>
-        <Pressable onPress={() => navigation.navigate('Details')} style={styles.menuOption}>
-          <Text style={styles.menuOptionText}>Iowa</Text>
-        </Pressable>
-      </View>
-    </View>
-  )
-}
 
 function DetailsScreen({ navigation }) {
   return (
@@ -60,9 +34,11 @@ export default function App() {
     <NavigationContainer>
       <Stack.Navigator>
         <Stack.Screen name="Home" component={HomeScreen} options={{
-          title: 'Overview'
+          headerShown: false
         }}/>
-        <Stack.Screen name="Details" component={DetailsScreen} />
+        <Stack.Screen name="Chat" component={ChatScreen} options={{
+          headerShown: false
+        }}/>
       </Stack.Navigator>
     </NavigationContainer>
   );
