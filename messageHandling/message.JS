@@ -1,21 +1,29 @@
-//Prototype
+//Prototype class of Message
 const Message = {
     senderName: "",
-    senderId: 0,
+    senderID: 0,
     content: "",
-    cordN: 0,
-    cordS: 0,
-    cordE: 0,
-    cordW: 0
+    likeCount: 0,
+    cityTag: "",
+    backAlleyConstructor: function(sName,sID,content,lCount,cityTag){
+      this.senderName = sName;
+      this.senderID = sID;
+      this.content = content;
+      this.likeCount = lCount;
+      this.cityTag = cityTag;
+    }
   };
+  
+    
 
+//Testing
   const test = Object.create(Message);
   test.senderName = "cyanMonkey112";
   test.senderID = 2742;
   test.content = "Does anyone know if seasons is good today?";
 
-console.log(test.senderName)
-console.log(test.senderID);
-console.log(test.content);
+
+//Exports
+  module.exports = {Message};
 
   
