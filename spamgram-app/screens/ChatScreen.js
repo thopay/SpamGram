@@ -1,7 +1,9 @@
 import { View, StyleSheet, Dimensions, Text } from 'react-native';
 import { RFValue } from "react-native-responsive-fontsize";
-import ChatHeader from '../components/Header/Chat';
+import ChatHeader from '../components/Header/ChatHeader';
+import MessageInput from '../components/MessageInput';
 import NavigationBar from 'react-native-navbar';
+import Chat from '../components/Chat';
 
 const {
 	width: SCREEN_WIDTH,
@@ -12,6 +14,8 @@ export default function ChatScreen({ navigation }) {
     return (
         <View style={styles.container}>
 			<ChatHeader />
+			<Chat />
+			<MessageInput />
         </View>
     );
 }

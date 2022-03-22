@@ -21,7 +21,8 @@ function Chat() {
 			height: RFValue(150, 926),
 			position: 'absolute',
 			borderBottomLeftRadius: 15,
-			borderBottomRightRadius: 15
+			borderBottomRightRadius: 15,
+			zIndex: 3
 		}}>
 			<View style={{
 				width: '100%',
