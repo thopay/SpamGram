@@ -1,6 +1,5 @@
 const crypto = require("crypto");
 const n = crypto.randomInt(0, 1000000);
-//console.log(n);
 
 const adjectives = ["aback",
 "abaft",
@@ -730,12 +729,105 @@ const animals = ["Monkey",
 "Shrimp",
 "Squid"];
 
+
 var nameAdjective = adjectives[n%adjectives.length];
 var nameAnimal = animals[n%animals.length];
 var nameNumber = n%99;
 
-//console.log(nameAdjective.charAt(0).toUpperCase() + nameAdjective.slice(1));
-//console.log(nameAnimal.charAt(0).toUpperCase() + nameAnimal.slice(1));
-//console.log(nameNumber);
-
 console.log((nameAdjective.charAt(0).toUpperCase() + nameAdjective.slice(1)) + (nameAnimal.charAt(0).toUpperCase() + nameAnimal.slice(1))+(nameNumber))
+
+const animals2 = [
+    {name: "Monkey",emoji: "🐵"},
+    {name: "Gorilla",emoji: "🦍"},
+    {name: "Orangutan", emoji: "🦧"},
+    {name: "Dog",emoji: "🐶"},
+    {name: "Wolf",emoji: "🐺"},
+    {name: "Fox",emoji: "🦊"},
+    {name: "Raccoon",emoji: "🦝"},
+    {name: "Cat",emoji: "🐱"},
+    {name: "Lion",emoji: "🦁"},
+    {name: "Tiger",emoji: "🐯"},
+    {name: "Leopard",emoji: "🐆"},
+    {name: "Horse",emoji: "🐴"},
+    {name: "Unicorn",emoji: "🦄"},
+    {name: "Zebra",emoji: "🦓"},
+    {name: "Deer",emoji: "🦌"},
+    {name: "Bison",emoji: "🦬"},
+    {name: "Cow",emoji: "🐮"},
+    {name: "Pig",emoji: "🐷"},
+    {name: "Sheep",emoji: "🐑"},
+    {name: "Camel",emoji: "🐫"},
+    {name: "Llama",emoji: "🦙"},
+    {name: "Giraffe",emoji: "🦒"},
+    {name: "Elephant",emoji: "🐘"},
+    {name: "Mammoth",emoji: "🦣"},
+    {name: "Rhino",emoji: "🦏"},
+    {name: "Hippo",emoji: "🦛"},
+    {name: "Mouse",emoji: "🐭"},
+    {name: "Rat",emoji: "🐀"},
+    {name: "Hamster",emoji: "🐹"},
+    {name: "Rabbit",emoji: "🐰"},
+    {name: "Chipmunk",emoji: "🐿️"},
+    {name: "Beaver",emoji: "🦫"},
+    {name: "Hedgehog",emoji: "🦔"},
+    {name: "Bat",emoji: "🦇"},
+    {name: "Bear",emoji: "🐻"},
+    {name: "Koala",emoji: "🐨"},
+    {name: "Panda",emoji: "🐼"},
+    {name: "Sloth",emoji: "🦥"},
+    {name: "Otter",emoji: "🦦"},
+    {name: "Skunk",emoji: "🦨"},
+    {name: "Kangaroo",emoji: "🦘"},
+    {name: "Badger",emoji: "🦡"},
+    {name: "Turkey",emoji: "🦃"},
+    {name: "Chicken",emoji: "🐔"},
+    {name: "Rooster",emoji: "🐓"},
+    {name: "Chick",emoji: "🐣"},
+    {name: "Bird",emoji: "🐦"},
+    {name: "Penguin",emoji: "🐧"},
+    {name: "Dove",emoji: "🕊️"},
+    {name: "Eagle",emoji: "🦅"},
+    {name: "Duck",emoji: "🦆"},
+    {name: "Swan",emoji: "🦢"},
+    {name: "Owl",emoji: "🦉"},
+    {name: "Dodo",emoji: "🦤"},
+    {name: "Flamingo",emoji: "🦩"},
+    {name: "Peacock",emoji: "🦚"},
+    {name: "Parrot",emoji: "🦜"},
+    {name: "Frog",emoji: "🐸"},
+    {name: "Turtle",emoji: "🐢"},
+    {name: "Lizard",emoji: "🦎"},
+    {name: "Snake",emoji: "🐍"},
+    {name: "Dragon",emoji: "🐲"},
+    {name: "Sauropod",emoji: "🦕"},
+    {name: "T-Rex",emoji: "🦖"},
+    {name: "Whale",emoji: "🐋"},
+    {name: "Dolphin",emoji: "🐬"},
+    {name: "Seal",emoji: "🦭"},
+    {name: "Fish",emoji: "🐟"},
+    {name: "Shark",emoji: "🦈"},
+    {name: "Octopus",emoji: "🐙"},
+    {name: "Snail",emoji: "🐌"},
+    {name: "Bug",emoji: "🐛"},
+    {name: "Ant",emoji: "🐜"},
+    {name: "Honeybee",emoji: "🐝"},
+    {name: "Beetle",emoji: "🪲"},
+    {name: "LadyBug",emoji: "🐞"},
+    {name: "Cricket",emoji: "🦗"},
+    {name: "Spider",emoji: "🕷️"},
+    {name: "Scorpion",emoji: "🦂"},
+    {name: "Fly",emoji: "🪰"},
+    {name: "Worm",emoji: "🪱"},
+    {name: "Microbe",emoji: "🦠"},
+    {name: "Crab",emoji: "🦀"},
+    {name: "Lobster",emoji: "🦞"},
+    {name: "Shrimp",emoji: "🦐"},
+    {name: "Squid",emoji: "🦑"}
+    ]
+    
+    for(var i=0; i<animals2.length; i++){
+        if(animals2[i].name == nameAnimal){
+            console.log(animals2[i].emoji);
+        }
+    }
+    
