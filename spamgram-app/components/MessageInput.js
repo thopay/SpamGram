@@ -3,8 +3,23 @@ import { RFValue } from "react-native-responsive-fontsize";
 import { Feather } from '@expo/vector-icons'; 
 import { useState } from 'react';
 
-function MessageInput() {
+function MessageInput({ messages, setMessages, setFocused }) {
 	const [pressed, setPressed] = useState(false)
+
+	const [text, setText] = useState()
+
+	function sendMessage() {
+		if (text != '' && text != null) {
+			setMessages([...messages, {
+				id: messages.length + 1,
+				text,
+				author: 'You',
+				authorColor: "#FCCFFD",
+				timestamp: Date.now()
+			}])
+			setText()
+		}
+	}
 
 	return (
 		<KeyboardAvoidingView behavior={Platform.OS === "ios" ? "padding" : "height"} style={styles.container} keyboardVerticalOffset={RFValue(115, 926)}>
@@ -13,7 +28,7 @@ function MessageInput() {
 				padding: 20,
 				flexDirection: 'row'
 			}}> 
-				<TextInput placeholder='New Message...' style={{
+				<TextInput value={text} placeholder='New Message...' style={{
 					backgroundColor: '#000',
 					padding: 10,
 					borderRadius: 5,
@@ -22,14 +37,18 @@ function MessageInput() {
 					width: '85%',
 					height: RFValue(60, 926),
 					fontSize: RFValue(18, 926)
-				}} placeholderTextColor={'rgba(256, 256, 256, 0.5)'}/>
+				}} 
+				placeholderTextColor={'rgba(256, 256, 256, 0.5)'}
+				onChangeText={newText => setText(newText)}
+				onFocus={() => setFocused(true)}
+				onBlur={() => setFocused(false)} />
 				<View style={{
 					flex: 1,
 					alignItems: 'center',
 					width: '15%',
 					height: RFValue(60, 926),
 				}}>
-					<TouchableHighlight onPressIn={() => setPressed(true)} onPressOut={() => setPressed(false)} onPress={() => console.log('hello')} style={{
+					<TouchableHighlight onPressIn={() => setPressed(true)} onPressOut={() => {setPressed(false)}} onPress={() => sendMessage()} style={{
 						backgroundColor: '#000000',
 						borderRadius: '50%',
 						justifyContent: 'center',
