@@ -1,10 +1,11 @@
 import mongoose from 'mongoose';
 
 const postSchema = mongoose.Schema({
-title: {type: String, required:true},
-message: {type: String, required:true},
+title: String,
+message: String,
 creator: String,
 selectedfile: String,
+
 likeCount: {
 
     type: Number,
@@ -12,9 +13,10 @@ likeCount: {
 },
 createdAt: {
 type: Date,
+location: Object,
 default: new Date()
 
-}
+},
 
 });
 
