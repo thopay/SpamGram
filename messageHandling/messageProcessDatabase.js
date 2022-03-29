@@ -1,6 +1,13 @@
 //Imports
 const msg = require("./message");
+const crypto = require('crypto')
 
+var mockUserNameDataBase = {
+    redRadish : crypto.createHash('sha512').update('gamer123').digest('hex'),
+    JohnCenaFan : "test",
+    DemonSlayer23 : "test"
+
+}
 //Stub for choosing which database to send message to
 function sortMsgLoc(toSort){
     if(toSort.cityTag === "Ames"){
@@ -24,7 +31,7 @@ function updateChatRoom(geoTag){
     //Get all messages from the database for this tag 
     //Send to user
 }
-function sortChatRoom(name,data){
+function sortChatRoom(name,data){l
     //Code to get the list of messages from chatroom here 
     unSortedMSg = data.slice(0)
     sortedMsg = []
@@ -35,21 +42,20 @@ function sortChatRoom(name,data){
 
 }
 function sortChatRoomProg(sorted,unSorted){  
-    console.log(unSorted)
-    console.log(sorted)  
-    if(unSorted.length === 0){
-        return (sorted);
-    }
     
-    else{
-        toPlace = unSorted[0]
-        unSorted.splice(0,1)
+    toPlace = unSorted[0] 
+    unSorted.splice(0,1)
         if(sorted.length === 0){
             sorted = [toPlace]
         }
-        else{
+        uLen = unSorted.length
+        for(let k =0; k<uLen; k+=1){
+            //console.log(unSorted)
+            //console.log(sorted)
+            toPlace = unSorted[k]
+           //unSorted.splice(0,1)
             sLen = sorted.length
-        for(let i =0; i<sLen; i+=1){
+            for(let i =0; i<sLen; i+=1){
                 currentPlace = sorted[i]
                 if(currentPlace.likeCount < toPlace.likeCount){
                     secondHalf = sorted.splice(i)
@@ -57,25 +63,42 @@ function sortChatRoomProg(sorted,unSorted){
                     sorted.push(...secondHalf)
                     i += sLen +5
                 }
-                else{
+                else if (i == sLen -1){
                     sorted.push(toPlace)
+    
                 }
             }
         }
-        sortChatRoomProg(sorted,unSorted)
+        return sorted
+        
     }
-}
+    function getRandomInt(max) {
+        return Math.floor(Math.random() * max);
+      }  
+    //Needs to be client side
+    function checkLogin(userName,password){
+        if(userName in mockUserNameDataBase){
+           passHashDataBase = mockUserNameDataBase[userName]
+           passHashGiven = crypto.createHash('sha512').update(password).digest('hex');
+           if(passHashDataBase ===  passHashGiven){
+                //Log them into there account 
+               console.log("Logging in")
+           }
+           else{
+               //Tell them the login is incorrect
+               console.log("Incorrect login")
+           }
+        }
+        else{
+            console.log("Incorrect login")
+        }
+        //Check if there is a username in the database 
+            //Represented as a dictionary for now
+    }
+
 
 
 //Testing
-const msg1 = Object.create(msg.Message);
-msg1.backAlleyConstructor("msg1",2387,"Who pulled the fire alarm in Willow",10,"NwYk");
-const msg2 = Object.create(msg.Message);
-msg2.backAlleyConstructor("msg2",2387,"Who pulled the fire alarm in Willow",5,"NwYk");
-const msg3 = Object.create(msg.Message);
-msg3.backAlleyConstructor("msg3",2387,"Who pulled the fire alarm in Willow",20,"NwYk");
+checkLogin("redRadish","gamer123")
 
-var testArr = [msg1,msg2,msg3]
-var testArrFinal = []
-console.log(sortChatRoomProg(testArrFinal,testArr))
 //console.log(testArrSend)
