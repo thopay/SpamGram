@@ -3,19 +3,17 @@ import { RFValue } from "react-native-responsive-fontsize";
 import { Feather } from '@expo/vector-icons'; 
 import { useState } from 'react';
 
-function MessageInput({ messages, setMessages, setFocused }) {
+function CommentInput({ comments, setComments, setFocused }) {
 	const [pressed, setPressed] = useState(false)
 
 	const [text, setText] = useState()
 
-	function sendMessage() {
+	function sendComment() {
 		if (text != '' && text != null) {
-			setMessages([...messages, {
-				id: messages.length + 1,
+			setComments([...comments, {
+				id: comments.length + 1,
 				text,
 				author: 'You',
-				authorColor: "#FCCFFD",
-				authorEmoji: '🐼',
 				timestamp: Date.now()
 			}])
 			setText()
@@ -23,13 +21,13 @@ function MessageInput({ messages, setMessages, setFocused }) {
 	}
 
 	return (
-		<KeyboardAvoidingView behavior={Platform.OS === "ios" ? "padding" : "height"} style={styles.container} keyboardVerticalOffset={RFValue(115, 926)}>
+		<KeyboardAvoidingView behavior={Platform.OS === "ios" ? "padding" : "height"} style={styles.container} keyboardVerticalOffset={RFValue(160, 926)}>
 			<View style={{
 				flex: 1,
-				padding: 20,
+				padding: 15,
 				flexDirection: 'row'
 			}}> 
-				<TextInput value={text} placeholder='New Message...' style={{
+				<TextInput value={text} placeholder='New Comment...' style={{
 					backgroundColor: '#000',
 					padding: 10,
 					borderRadius: 5,
@@ -49,7 +47,7 @@ function MessageInput({ messages, setMessages, setFocused }) {
 					width: '15%',
 					height: RFValue(60, 926),
 				}}>
-					<TouchableHighlight onPressIn={() => setPressed(true)} onPressOut={() => {setPressed(false)}} onPress={() => sendMessage()} style={{
+					<TouchableHighlight onPressIn={() => setPressed(true)} onPressOut={() => {setPressed(false)}} onPress={() => sendComment()} style={{
 						backgroundColor: '#000000',
 						borderRadius: '50%',
 						justifyContent: 'center',
@@ -74,12 +72,11 @@ const styles = StyleSheet.create({
 		backgroundColor: '#1D1E21',
 		position: 'absolute',
 		bottom: 0,
-		height: RFValue(150, 926),
 		width: '100%',
-		borderTopLeftRadius: 15,
-		borderTopRightRadius: 15,
+		borderBottomLeftRadius: 15,
+		borderBottomRightRadius: 15,
 		zIndex: 3
 	}
 });
 
-export default MessageInput
+export default CommentInput

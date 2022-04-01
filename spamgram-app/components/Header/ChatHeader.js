@@ -3,6 +3,7 @@ import { View, Dimensions, Text, TouchableHighlight, Image } from 'react-native'
 import { RFValue } from "react-native-responsive-fontsize";
 import { AntDesign } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
+import Avatar from '../Avatar';
 
 const {
 	width: SCREEN_WIDTH,
@@ -57,18 +58,13 @@ function Chat() {
 						width: '100%',
 						justifyContent: 'center'
 					}}>
-						<Image source={require("../../assets/purplePanda.png")} style={{
-							marginRight: 10,
-							aspectRatio: 1,
-							height: 24,
-							width: 24,
-							resizeMode: 'stretch',
-						}}/>
+						<Avatar height={24} width={24} color={'#FCCFFD'} radius={'50%'} fontSize={12} emoji={'🐼'} />
 						<Text style={{
 							color: '#FCCFFD',
 							textAlign: 'center',
 							marginBottom: 10,
-							fontSize: RFValue(24, 926)
+							fontSize: RFValue(24, 926),
+							marginLeft: 10
 						}}>PurplePanda3</Text>
 					</View>
 					<Text style={{
@@ -76,7 +72,7 @@ function Chat() {
 						width: '100%',
 						textAlign: 'center',
 						fontWeight: '700',
-						fontSize: RFValue(24, 926)
+						fontSize: RFValue(24, 926),
 					}}>Iowa State University</Text>
 				</View>
 			</View>

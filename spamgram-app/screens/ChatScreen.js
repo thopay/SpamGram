@@ -19,6 +19,7 @@ export default function ChatScreen({ navigation }) {
 			text: 'bruh',
 			author: 'BlueFox78',
 			authorColor: '#CFE1FD',
+			authorEmoji: '🦊',
 			timestamp: 1648593082395
 		},
 		{
@@ -26,6 +27,7 @@ export default function ChatScreen({ navigation }) {
 			text: 'This math 165 hw is killing me',
 			author: 'You',
 			authorColor: '#FCCFFD',
+			authorEmoji: '🐼',
 			timestamp: 1648593082395
 		},
 	]);

@@ -4,6 +4,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { RFValue } from "react-native-responsive-fontsize";
 import HomeScreen from './screens/HomeScreen';
 import ChatScreen from './screens/ChatScreen';
+import PostScreen from './screens/PostScreen';
 
 const {
   width: SCREEN_WIDTH,
@@ -37,6 +38,9 @@ export default function App() {
           headerShown: false
         }}/>
         <Stack.Screen name="Chat" component={ChatScreen} options={{
+          headerShown: false
+        }}/>
+        <Stack.Screen name="Post" component={PostScreen} options={{
           headerShown: false
         }}/>
       </Stack.Navigator>
