@@ -1,42 +1,58 @@
-import { useRef } from "react";
-import { ScrollView, Dimensions, View, SafeAreaView, FlatList } from "react-native"
-import { RFValue } from "react-native-responsive-fontsize"
+import { useState } from "react";
+import {
+    Dimensions,
+    SafeAreaView,
+    FlatList,
+    RefreshControl
+} from "react-native";
+import { RFValue } from "react-native-responsive-fontsize";
 import PostCard from "./PostCard";
 
-const {
-	width: SCREEN_WIDTH,
-	height: SCREEN_HEIGHT
-  } = Dimensions.get('window');
+function PostList({ posts, setPosts, navigation, voteUtils }) {
 
-function PostList({ posts, setPosts, navigation }) {
+    const [refreshing, setRefreshing] = useState(false)
 
-	const scrollRef = useRef();
+    const _onRefresh = () => {
+        setRefreshing(true)
+        setTimeout(function() {
+            setRefreshing(false)
+        }, 1000)
+    }
 
-	return (
-		<SafeAreaView style={{
-		}}>
-			<FlatList
-				data={posts}
-				renderItem={(post) => {
-					return (
-						<PostCard key={post.item.id} data={post.item} navigation={navigation} />
-					)
-				}}
-				keyExtractor={post => post.id}
-				style={{
-					paddingLeft: 15,
-					paddingRight: 15,
-					marginTop: RFValue(95, 926),
-					marginBottom: RFValue(65, 926),
-				}}
-				contentContainerStyle={{
-					justifyContent: "flex-end",
-					flexGrow: 1,
-				}}
-				inverted
-			/>
-		</SafeAreaView>
-	)
+    return (
+        <SafeAreaView style={{}}>
+            <FlatList
+                data={posts}
+                refreshControl={
+                    <RefreshControl 
+                        refreshing={refreshing} 
+                        onRefresh={_onRefresh}
+                        tintColor="#fff"/>
+                }
+                renderItem={(post) => {
+                    return (
+                        <PostCard
+                            key={post.item.id}
+                            data={post.item}
+                            navigation={navigation}
+                            voteUtils={voteUtils}
+                        />
+                    );
+                }}
+                keyExtractor={(post) => post.id}
+                style={{
+                    paddingLeft: 15,
+                    paddingRight: 15,
+                    marginTop: RFValue(95, 926),
+                    marginBottom: RFValue(65, 926),
+                }}
+                contentContainerStyle={{
+                    justifyContent: "flex-end",
+                    flexGrow: 1,
+                }}
+            />
+        </SafeAreaView>
+    );
 }
 
-export default PostList
+export default PostList;
