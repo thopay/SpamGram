@@ -11,48 +11,17 @@ import { RFValue } from "react-native-responsive-fontsize";
 import HomeFooter from "../components/Footer/HomeFooter";
 import HomeHeader from "../components/Header/HomeHeader";
 import PostList from "../components/PostList";
+import { useNavigation } from "@react-navigation/native";
 
 const { width: SCREEN_WIDTH, height: SCREEN_HEIGHT } = Dimensions.get("window");
 
-export default function HomeScreen({ navigation }) {
-    const [posts, setPosts] = useState([
-        {
-            id: 0,
-            text: "I'm in love with Chris Evans",
-            author: "RedRat19",
-            authorColor: "#FDCFCF",
-            authorEmoji: "🐭",
-            timestamp: 1648776191534,
-            votes: 0,
-        },
-        {
-            id: 1,
-            text: "oh yeah oh yeah oh yeah oh yeah oh yeah oh yehjf ljfsflkjlkjff",
-            author: "BlueFox78",
-            authorColor: "#CFE1FD",
-            authorEmoji: "🦊",
-            timestamp: 1648776191534,
-            votes: 0,
-        },
-        {
-            id: 2,
-            text: "Who tryna meet in Beardshear rn??",
-            author: "GreenGorilla9",
-            authorColor: "#D0FDCF",
-            authorEmoji: "🦍",
-            timestamp: 1648776191534,
-            votes: 0,
-        },
-        {
-            id: 3,
-            text: "I wanna get hit by cyride.",
-            author: "You",
-            authorColor: "#FCCFFD",
-            authorEmoji: "🐼",
-            timestamp: 1648776191534,
-            votes: 0,
-        },
-    ]);
+export default function HomeScreen(props) {
+    const posts = props.posts
+    const setPosts = props.setPosts
+
+    const navigation = useNavigation();
+
+    const [screen, setScreen] = useState(0)
 
     const updateVotes = (id, value) => {
         let newPosts = posts.map((post) => {
@@ -69,62 +38,82 @@ export default function HomeScreen({ navigation }) {
     };
 
     return (
-        <View
-            style={{
-                flex: 1,
-                backgroundColor: "#090909",
-            }}
-        >
-            <HomeHeader />
+        <>
             <View
                 style={{
                     flex: 1,
-                    alignItems: "center",
-                    justifyContent: "center",
+                    backgroundColor: "#090909",
+                    display: screen == 0 ? '' : 'none'
                 }}
             >
-                {/* <View style={styles.headSection}>
-					<Text style={styles.header}>Welcome PurplePanda3!</Text>
-					<Image source={require("../assets/star.png")} style={{
-						margin: RFValue(10, 926)
-					}}/>
-					<Text style={styles.subheader}>Where would you like to go?</Text>
-				</View> */}
-                <PostList
-                    posts={posts}
-                    setPosts={setPosts}
-                    navigation={navigation}
-                    voteUtils={{ updateVotes, getVotes }}
-                />
-                {/* <PostCard data={{
-					text: 'bruh',
-					author: 'BlueFox78',
-					authorColor: '#CFE1FD',
-					authorEmoji: '🦊',
-					timestamp: 1648593082395
-				}}/> */}
-                {/* <View>
-					<TouchableHighlight onPress={() => navigation.navigate("Chat")}
-						style={styles.menuOption}
-						underlayColor={"#000"}>
-						<Text style={styles.menuOptionText}>
-							Chats
-						</Text>
-					</TouchableHighlight>
-					<TouchableHighlight onPress={() => navigation.navigate("Details")}
-						style={styles.menuOption}
-						underlayColor={"#000"}>
-						<Text style={styles.menuOptionText}>Posts</Text>
-					</TouchableHighlight>
-					<TouchableHighlight onPress={() => navigation.navigate("Details")}
-						style={styles.menuOption}
-						underlayColor={"#000"}>
-						<Text style={styles.menuOptionText}>Iowa</Text>
-					</TouchableHighlight>
-				</View> */}
+                <HomeHeader />
+                <View
+                    style={{
+                        flex: 1,
+                        alignItems: "center",
+                        justifyContent: "center",
+                    }}
+                >
+                    <PostList
+                        posts={posts}
+                        setPosts={setPosts}
+                        navigation={navigation}
+                        voteUtils={{ updateVotes, getVotes }}
+                    />
+                </View>
             </View>
-            <HomeFooter />
-        </View>
+            <View
+                style={{
+                    flex: 1,
+                    backgroundColor: "#090909",
+                    display: screen == 1 ? '' : 'none'
+                }}
+            >
+                <View
+                    style={{
+                        flex: 1,
+                        alignItems: "center",
+                        justifyContent: "center",
+                    }}
+                >
+                    <View style={styles.headSection}>
+                        <Text style={styles.header}>Welcome PurplePanda3!</Text>
+                        <Image source={require("../assets/star.png")} style={{
+                            margin: RFValue(10, 926)
+                        }}/>
+                        <Text style={styles.subheader}>Pick a chat room!</Text>
+                    </View>
+                    <View>
+                        <TouchableHighlight onPress={() => navigation.navigate("Chat", {
+                            title: 'Iowa State University'
+                        })}
+                            style={styles.menuOption}
+                            underlayColor={"#000"}>
+                            <Text style={styles.menuOptionText}>
+                                Iowa State University
+                            </Text>
+                        </TouchableHighlight>
+                        <TouchableHighlight onPress={() => navigation.navigate("Chat", {
+                            title: 'Ames'
+                        })}
+                            style={styles.menuOption}
+                            underlayColor={"#000"}>
+                            <Text style={styles.menuOptionText}>Ames</Text>
+                        </TouchableHighlight>
+                        <TouchableHighlight onPress={() => navigation.navigate("Chat", {
+                            title: 'Iowa'
+                        })}
+                            style={styles.menuOption}
+                            underlayColor={"#000"}>
+                            <Text style={styles.menuOptionText}>Iowa</Text>
+                        </TouchableHighlight>
+                    </View>
+                </View>
+                <HomeFooter />
+            </View>
+            <HomeFooter screen={screen} setScreen={setScreen} />
+        </>
+        
     );
 }
 
@@ -148,7 +137,7 @@ const styles = StyleSheet.create({
     menuOption: {
         padding: RFValue(24, 926),
         margin: RFValue(12, 926),
-        backgroundColor: "#0F0F10",
+        backgroundColor: "#1D1E21",
         width: (399 / 428) * SCREEN_WIDTH,
         borderColor: "#FCCFFD",
         borderWidth: 1,

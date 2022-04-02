@@ -5,7 +5,10 @@ import ChatHeader from "../components/Header/ChatHeader";
 import MessageInput from "../components/MessageInput";
 import Chat from "../components/Chat";
 
-export default function ChatScreen({ navigation }) {
+export default function ChatScreen(props) {
+
+    const chatRoom = props.route.params
+
     const [messages, setMessages] = useState([
         {
             id: 0,
@@ -29,7 +32,7 @@ export default function ChatScreen({ navigation }) {
 
     return (
         <View style={styles.container}>
-            <ChatHeader />
+            <ChatHeader chatRoom={chatRoom} />
             <Chat
                 messages={messages}
                 setMessages={setMessages}

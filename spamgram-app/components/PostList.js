@@ -22,7 +22,9 @@ function PostList({ posts, setPosts, navigation, voteUtils }) {
     return (
         <SafeAreaView style={{}}>
             <FlatList
-                data={posts}
+                data={posts.sort((a, b) => {
+                    return b.timestamp - a.timestamp
+                })}
                 refreshControl={
                     <RefreshControl 
                         refreshing={refreshing} 

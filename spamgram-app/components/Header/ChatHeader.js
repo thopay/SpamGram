@@ -10,7 +10,7 @@ import { AntDesign } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
 import Avatar from "../Avatar";
 
-function Chat() {
+function Chat({ chatRoom }) {
     const [pressed, setPressed] = useState(false);
     const navigation = useNavigation();
 
@@ -104,7 +104,7 @@ function Chat() {
                             fontSize: RFValue(24, 926),
                         }}
                     >
-                        Iowa State University
+                        { chatRoom.title }
                     </Text>
                 </View>
             </View>

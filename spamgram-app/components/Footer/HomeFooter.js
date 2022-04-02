@@ -9,8 +9,7 @@ import { AntDesign } from "@expo/vector-icons";
 import { useState } from "react";
 import { useNavigation } from "@react-navigation/native";
 
-function HomeFooter() {
-    const [focused, setFocused] = useState(0);
+function HomeFooter({ screen, setScreen }) {
     const navigation = useNavigation();
 
     return (
@@ -23,12 +22,12 @@ function HomeFooter() {
                     alignItems: "center",
                 }}
             >
-                <TouchableWithoutFeedback onPress={() => setFocused(0)}>
+                <TouchableWithoutFeedback onPress={() => setScreen(0)}>
                     <MaterialCommunityIcons
                         name="map-marker-radius"
                         size={40}
                         color={
-                            focused == 0 ? "white" : "rgba(255, 255, 255, 0.25)"
+                            screen == 0 ? "white" : "rgba(255, 255, 255, 0.25)"
                         }
                         style={{
                             top: -10,
@@ -37,16 +36,13 @@ function HomeFooter() {
                     />
                 </TouchableWithoutFeedback>
                 <TouchableWithoutFeedback
-                    onPress={() => {
-                        setFocused(1);
-                        navigation.navigate("Chat");
-                    }}
+                    onPress={() => setScreen(1)}
                 >
                     <AntDesign
                         name="message1"
                         size={40}
                         color={
-                            focused == 1 ? "white" : "rgba(255, 255, 255, 0.25)"
+                            screen == 1 ? "white" : "rgba(255, 255, 255, 0.25)"
                         }
                         style={{
                             top: -10,

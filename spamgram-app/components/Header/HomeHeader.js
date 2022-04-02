@@ -6,10 +6,12 @@ import {
 } from "react-native";
 import { RFValue } from "react-native-responsive-fontsize";
 import { Entypo } from "@expo/vector-icons";
+import { useNavigation } from "@react-navigation/native";
 import Avatar from "../Avatar";
 
 function HomeHeader() {
     const [pressed, setPressed] = useState(false);
+    const navigation = useNavigation();
 
     return (
         <View
@@ -72,7 +74,9 @@ function HomeHeader() {
                 <TouchableHighlight
                     onPressIn={() => setPressed(true)}
                     onPressOut={() => setPressed(false)}
-                    onPress={() => console.log("Add New")}
+                    onPress={() => navigation.navigate("NewPost", {
+                        title: "Fart"
+                    })}
                     style={{
                         backgroundColor: "#67FF88",
                         margin: 14,
