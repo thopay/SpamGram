@@ -6,7 +6,7 @@ import cors from 'cors';
 import postRoutes from './routes/post.js';
 const app = express();
 
-app.use('/post', postRoutes);
+app.use('/', postRoutes);
 app.use(bodyParser.json({ limit: "20mb", extended: true}));
 app.use(bodyParser.urlencoded({ limit: "20mb", extended: true}));
 app.use(cors());
@@ -18,4 +18,6 @@ mongoose.connect(CONNECTION_URL, { useNewUrlParser: true, useUnifiedTopology: tr
     .then(() => app.listen(PORT, () => console.log('Server running on port: ${PORT}')))
     .catch((error) => console.log(error.message));
 
+
+   
     
