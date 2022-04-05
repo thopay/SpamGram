@@ -1,5 +1,5 @@
 //Imports
-const msg = require("./message");
+const SGBP = require("./SpamGramBlueprints.JS");
 const crypto = require('crypto')
 
 var mockUserNameDataBase = {
@@ -41,7 +41,7 @@ function sortChatRoom(name,data){l
     return newData
 
 }
-function sortChatRoomProg(sorted,unSorted){  
+function sortChatRoomByLike(sorted,unSorted){  
     
     toPlace = unSorted[0] 
     unSorted.splice(0,1)
@@ -72,9 +72,41 @@ function sortChatRoomProg(sorted,unSorted){
         return sorted
         
     }
+    function sortChatRoomByTime(sorted,unSorted){  
+    
+        toPlace = unSorted[0] 
+        unSorted.splice(0,1)
+            if(sorted.length === 0){
+                sorted = [toPlace]
+            }
+            uLen = unSorted.length
+            for(let k =0; k<uLen; k+=1){
+                //console.log(unSorted)
+                //console.log(sorted)
+                toPlace = unSorted[k]
+               //unSorted.splice(0,1)
+                sLen = sorted.length
+                for(let i =0; i<sLen; i+=1){
+                    currentPlace = sorted[i]
+                    if(currentPlace.timeSent < toPlace.timeSent){
+                        secondHalf = sorted.splice(i)
+                        sorted.push(toPlace)
+                        sorted.push(...secondHalf)
+                        i += sLen +5
+                    }
+                    else if (i == sLen -1){
+                        sorted.push(toPlace)
+        
+                    }
+                }
+            }
+            return sorted
+            
+        }
     function getRandomInt(max) {
         return Math.floor(Math.random() * max);
       }  
+  
     //Needs to be client side
     function checkLogin(userName,password){
         if(userName in mockUserNameDataBase){
@@ -99,6 +131,15 @@ function sortChatRoomProg(sorted,unSorted){
 
 
 //Testing
-checkLogin("redRadish","gamer123")
 
-//console.log(testArrSend)
+testArr = []
+for (let i =0; i<50; i++){
+    const temp = new SGBP.Message("Test User" ,1000+i,"This is a test",getRandomInt(100),"Ames")
+    testArr.push(temp)
+    
+
+}
+testArrSend =[]
+testArrSend =  sortChatRoomByTime(testArrSend,testArr)
+
+console.log(testArrSend)
