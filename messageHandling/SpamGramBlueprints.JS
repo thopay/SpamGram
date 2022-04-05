@@ -1,6 +1,12 @@
 //Prototype class of Message
-class Message  {
-    constructor(sName,sID,content,lCount,cityTag) {
+const Message = {
+    senderName: "",
+    senderID: 0,
+    content: "",
+    likeCount: 0,
+    cityTag: "",
+    timeSent: 0,
+    backAlleyConstructor: function (sName,sID,content,lCount,cityTag) {
       this.senderName = sName;
       this.senderID = sID;
       this.content = content;
@@ -9,15 +15,16 @@ class Message  {
       this.timeSent = Date.now()
     }
   };
-class User  {
-  constructor(getUserName,getPhoneNumber,getPasswordHash,messagesArr) {
-    this.userName = getUserName;
-    this.phoneNumber = getPhoneNumber;
-    this.passwordHash = getPasswordHash;
-    this.messageHistory =  messagesArr
-  }
-
-}
+  const User = {
+    name: "",
+    userID: 0,
+    phoneNumber: "",
+    backAlleyConstructor: function (getName,getUserID,getPhoneNumber) {
+     this.name = getName
+     this.userID = getUserID
+     this.phoneNumber = getPhoneNumber
+    }
+  };
   
     
 
@@ -30,6 +37,5 @@ class User  {
 
 //Exports
   module.exports = {Message};
-  module.exports = {User};
 
   

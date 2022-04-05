@@ -2,6 +2,10 @@
 const SGBP = require("./SpamGramBlueprints.JS");
 const crypto = require('crypto')
 
+
+
+Message = SGBP.Message
+
 var mockUserNameDataBase = {
     redRadish : crypto.createHash('sha512').update('gamer123').digest('hex'),
     JohnCenaFan : "test",
@@ -133,13 +137,14 @@ function sortChatRoomByLike(sorted,unSorted){
 //Testing
 
 testArr = []
-for (let i =0; i<50; i++){
-    const temp = new SGBP.Message("Test User" ,1000+i,"This is a test",getRandomInt(100),"Ames")
+for (let i =0; i<500; i++){
+    const temp = Object.create(SGBP.Message)
+    temp.backAlleyConstructor("Test User" ,1000+i,"This is a test",getRandomInt(1000),"Ames")
     testArr.push(temp)
     
 
 }
 testArrSend =[]
-testArrSend =  sortChatRoomByTime(testArrSend,testArr)
+testArrSend =  sortChatRoomByLike(testArrSend,testArr)
 
 console.log(testArrSend)
