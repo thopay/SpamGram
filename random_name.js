@@ -739,95 +739,138 @@ console.log((nameAdjective.charAt(0).toUpperCase() + nameAdjective.slice(1)) + (
 const animals2 = [
     {name: "Monkey",emoji: "🐵"},
     {name: "Gorilla",emoji: "🦍"},
-    {name: "Orangutan", emoji: "🦧"},
-    {name: "Dog",emoji: "🐶"},
+    {name: "Orangutan", emoji: "🦧",blacklistedColors:"Orange"},
+    {name: "Dog",emoji: "🐶",blacklistedColors:"Red"},
     {name: "Wolf",emoji: "🐺"},
-    {name: "Fox",emoji: "🦊"},
+    {name: "Fox",emoji: "🦊",blacklistedColors:"Orange"},
     {name: "Raccoon",emoji: "🦝"},
-    {name: "Cat",emoji: "🐱"},
-    {name: "Lion",emoji: "🦁"},
-    {name: "Tiger",emoji: "🐯"},
-    {name: "Leopard",emoji: "🐆"},
+    {name: "Cat",emoji: "🐱",blacklistedColors:"Yellow"},
+    {name: "Lion",emoji: "🦁",blacklistedColors:"Yellow"},
+    {name: "Tiger",emoji: "🐯",blacklistedColors:"Orange"},
+    {name: "Leopard",emoji: "🐆",blacklistedColors:"Yellow"},
     {name: "Horse",emoji: "🐴"},
-    {name: "Unicorn",emoji: "🦄"},
+    {name: "Unicorn",emoji: "🦄",blacklistedColors:"Blue"},
     {name: "Zebra",emoji: "🦓"},
-    {name: "Deer",emoji: "🦌"},
+    {name: "Deer",emoji: "🦌",blacklistedColors:"Yellow"},
     {name: "Bison",emoji: "🦬"},
-    {name: "Cow",emoji: "🐮"},
-    {name: "Pig",emoji: "🐷"},
-    {name: "Sheep",emoji: "🐑"},
-    {name: "Camel",emoji: "🐫"},
-    {name: "Llama",emoji: "🦙"},
-    {name: "Giraffe",emoji: "🦒"},
+    {name: "Cow",emoji: "🐮",blacklistedColors:"Pink"},
+    {name: "Pig",emoji: "🐷",blacklistedColors:"Pink"},
+    {name: "Sheep",emoji: "🐑",blacklistedColors:"Orange"},
+    {name: "Camel",emoji: "🐫",blacklistedColors:"Yellow"},
+    {name: "Llama",emoji: "🦙",blacklistedColors:"Pink"},
+    {name: "Giraffe",emoji: "🦒",blacklistedColors:"Yellow"},
     {name: "Elephant",emoji: "🐘"},
     {name: "Mammoth",emoji: "🦣"},
     {name: "Rhino",emoji: "🦏"},
-    {name: "Hippo",emoji: "🦛"},
-    {name: "Mouse",emoji: "🐭"},
-    {name: "Rat",emoji: "🐀"},
-    {name: "Hamster",emoji: "🐹"},
+    {name: "Hippo",emoji: "🦛",blacklistedColors:"Pink"},
+    {name: "Mouse",emoji: "🐭",blacklistedColors:"Pink"},
+    {name: "Rat",emoji: "🐀",blacklistedColors:"Pink"},
+    {name: "Hamster",emoji: "🐹",blacklistedColors:"Yellow"},
     {name: "Rabbit",emoji: "🐰"},
-    {name: "Chipmunk",emoji: "🐿️"},
+    {name: "Chipmunk",emoji: "🐿️",blacklistedColors:"Yellow"},
     {name: "Beaver",emoji: "🦫"},
-    {name: "Hedgehog",emoji: "🦔"},
+    {name: "Hedgehog",emoji: "🦔",blacklistedColors:"Yellow"},
     {name: "Bat",emoji: "🦇"},
     {name: "Bear",emoji: "🐻"},
-    {name: "Koala",emoji: "🐨"},
+    {name: "Koala",emoji: "🐨",},
     {name: "Panda",emoji: "🐼"},
-    {name: "Sloth",emoji: "🦥"},
-    {name: "Otter",emoji: "🦦"},
+    {name: "Sloth",emoji: "🦥",blacklistedColors:"Yellow"},
+    {name: "Otter",emoji: "🦦",blacklistedColors:"Yellow"},
     {name: "Skunk",emoji: "🦨"},
-    {name: "Kangaroo",emoji: "🦘"},
+    {name: "Kangaroo",emoji: "🦘",blacklistedColors:"Yellow"},
     {name: "Badger",emoji: "🦡"},
-    {name: "Turkey",emoji: "🦃"},
-    {name: "Chicken",emoji: "🐔"},
-    {name: "Rooster",emoji: "🐓"},
-    {name: "Chick",emoji: "🐣"},
-    {name: "Bird",emoji: "🐦"},
-    {name: "Penguin",emoji: "🐧"},
-    {name: "Dove",emoji: "🕊️"},
+    {name: "Turkey",emoji: "🦃",blacklistedColors:"Red"},
+    {name: "Chicken",emoji: "🐔",blacklistedColors:"Red"},
+    {name: "Rooster",emoji: "🐓",blacklistedColors:"Green"},
+    {name: "Chick",emoji: "🐣",blacklistedColors:"Yellow"},
+    {name: "Bird",emoji: "🐦",blacklistedColors:"Red"},
+    {name: "Penguin",emoji: "🐧",blacklistedColors:"Orange"},
+    {name: "Dove",emoji: "🕊️",blacklistedColors:"Green"},
     {name: "Eagle",emoji: "🦅"},
-    {name: "Duck",emoji: "🦆"},
+    {name: "Duck",emoji: "🦆",blacklistedColors:"Green"},
     {name: "Swan",emoji: "🦢"},
-    {name: "Owl",emoji: "🦉"},
+    {name: "Owl",emoji: "🦉",blacklistedColors:"Orange"},
     {name: "Dodo",emoji: "🦤"},
-    {name: "Flamingo",emoji: "🦩"},
-    {name: "Peacock",emoji: "🦚"},
-    {name: "Parrot",emoji: "🦜"},
-    {name: "Frog",emoji: "🐸"},
-    {name: "Turtle",emoji: "🐢"},
-    {name: "Lizard",emoji: "🦎"},
-    {name: "Snake",emoji: "🐍"},
-    {name: "Dragon",emoji: "🐲"},
-    {name: "Sauropod",emoji: "🦕"},
-    {name: "T-Rex",emoji: "🦖"},
-    {name: "Whale",emoji: "🐋"},
-    {name: "Dolphin",emoji: "🐬"},
+    {name: "Flamingo",emoji: "🦩",blacklistedColors:"Pink"},
+    {name: "Peacock",emoji: "🦚",blacklistedColors:"Green"},
+    {name: "Parrot",emoji: "🦜",blacklistedColors:"Red"},
+    {name: "Frog",emoji: "🐸",blacklistedColors:"Green"},
+    {name: "Turtle",emoji: "🐢",blacklistedColors:"Green"},
+    {name: "Lizard",emoji: "🦎",blacklistedColors:"Green"},
+    {name: "Snake",emoji: "🐍",blacklistedColors:"Green"},
+    {name: "Dragon",emoji: "🐲",blacklistedColors:"Green"},
+    {name: "Sauropod",emoji: "🦕",blacklistedColors:"Green"},
+    {name: "T-Rex",emoji: "🦖",blacklistedColors:"Green"},
+    {name: "Whale",emoji: "🐋",blacklistedColors:"Blue"},
+    {name: "Dolphin",emoji: "🐬",blacklistedColors:"Blue"},
     {name: "Seal",emoji: "🦭"},
-    {name: "Fish",emoji: "🐟"},
+    {name: "Fish",emoji: "🐟",blacklistedColors:"Blue"},
     {name: "Shark",emoji: "🦈"},
-    {name: "Octopus",emoji: "🐙"},
-    {name: "Snail",emoji: "🐌"},
-    {name: "Bug",emoji: "🐛"},
-    {name: "Ant",emoji: "🐜"},
-    {name: "Honeybee",emoji: "🐝"},
-    {name: "Beetle",emoji: "🪲"},
-    {name: "LadyBug",emoji: "🐞"},
-    {name: "Cricket",emoji: "🦗"},
-    {name: "Spider",emoji: "🕷️"},
+    {name: "Octopus",emoji: "🐙",blacklistedColors:"Orange"},
+    {name: "Snail",emoji: "🐌",blacklistedColors:"Yellow"},
+    {name: "Bug",emoji: "🐛",blacklistedColors:"Green"},
+    {name: "Ant",emoji: "🐜",blacklistedColors:"Purple"},
+    {name: "Honeybee",emoji: "🐝",blacklistedColors:"Yellow"},
+    {name: "Beetle",emoji: "🪲",blacklistedColors:"Green"},
+    {name: "LadyBug",emoji: "🐞",blacklistedColors:"Red"},
+    {name: "Cricket",emoji: "🦗",blacklistedColors:"Green"},
+    {name: "Spider",emoji: "🕷️",blacklistedColors:"Purple"},
     {name: "Scorpion",emoji: "🦂"},
-    {name: "Fly",emoji: "🪰"},
-    {name: "Worm",emoji: "🪱"},
-    {name: "Microbe",emoji: "🦠"},
-    {name: "Crab",emoji: "🦀"},
-    {name: "Lobster",emoji: "🦞"},
-    {name: "Shrimp",emoji: "🦐"},
-    {name: "Squid",emoji: "🦑"}
-    ]
-    
+    {name: "Fly",emoji: "🪰",blacklistedColors:"Purple"},
+    {name: "Worm",emoji: "🪱",blacklistedColors:"Pink"},
+    {name: "Microbe",emoji: "🦠",blacklistedColors:"Green"},
+    {name: "Crab",emoji: "🦀",blacklistedColors:"Red"},
+    {name: "Lobster",emoji: "🦞",blacklistedColors:"Red"},
+    {name: "Shrimp",emoji: "🦐",blacklistedColors:"Red"},
+    {name: "Squid",emoji: "🦑",blacklistedColors:"Pink"}
+    ];
+const backgroundColors = ["Green","Red","Orange","Yellow","Blue","DarkBlue","Purple","Pink"
+    ];
+
     for(var i=0; i<animals2.length; i++){
         if(animals2[i].name == nameAnimal){
             console.log(animals2[i].emoji);
+            var k = n%8; 
+            if(animals2[i].blacklistedColors != backgroundColors[k]){
+                console.log(backgroundColors[k]);
+            }
+            else{var k = (n*150)%8
+                if(animals2[i].blacklistedColors != backgroundColors[k]){
+                    console.log(backgroundColors[k]);
+                }
+            }
         }
     }
+   /*        
+           
+         for(var j=0; j<animals2[i].blacklistedColors.length;j++){
+                //console.log(animals2[i].blacklistedColors[j]);
+                if(animals2[i].blacklistedColors[j] != backgroundColors[0]){
+                    console.log(animals2[i].blacklistedColors[j]);
+                }
+                if(animals2[i].blacklistedColors[j] == backgroundColors[1]){
+                    console.log(animals2[i].blacklistedColors[j]);
+                }
+                if(animals2[i].blacklistedColors[j] == backgroundColors[2]){
+                    console.log(backgroundColors[2]); 
+                }
+                if(animals2[i].blacklistedColors[j] == backgroundColors[3]){
+                    console.log(backgroundColors[3]);
+                }
+                if(animals2[i].blacklistedColors[j] == backgroundColors[4]){
+                    console.log(backgroundColors[4]);
+                }
+                if(animals2[i].blacklistedColors[j] == backgroundColors[5]){
+                    console.log(backgroundColors[5]);
+                }
+                if(animals2[i].blacklistedColors[j] == backgroundColors[6]){
+                    console.log(backgroundColors[6]);
+                }
+                if(animals2[i].blacklistedColors[j] == backgroundColors[7]){
+                    console.log(backgroundColors[7]);
+                }
+                    
+                }
+            
+   */     
     
