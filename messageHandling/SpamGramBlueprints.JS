@@ -1,23 +1,27 @@
 //Prototype class of Message
 const Message = {
     senderName: "",
-    senderID: 0,
+    messageID: 0,
     content: "",
+    long: 0,
+    lat: 0,
     likeCount: 0,
-    cityTag: "",
     timeSent: 0,
-    backAlleyConstructor: function (sName,sID,content,lCount,cityTag) {
+    backAlleyConstructor: function (sName,mID,content,lCount,long,lat,timeCreated) {
       this.senderName = sName;
       this.senderID = sID;
       this.content = content;
       this.likeCount = lCount;
       this.cityTag = cityTag;
-      this.timeSent = Date.now()
+      this.timeSent =timeCreated
     }
   };
+
   const User = {
     name: "",
     userID: 0,
+    color: 0,
+    emoji: 0,
     phoneNumber: "",
     backAlleyConstructor: function (getName,getUserID,getPhoneNumber) {
      this.name = getName
@@ -36,6 +40,6 @@ const Message = {
 
 
 //Exports
-  module.exports = {Message};
+  module.exports = {Message,User};
 
   

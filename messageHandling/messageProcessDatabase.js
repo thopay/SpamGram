@@ -133,18 +133,5 @@ function sortChatRoomByLike(sorted,unSorted){
     }
 
 
-
+module.exports = {sortChatRoomByTime,sortChatRoomByLike};
 //Testing
-
-testArr = []
-for (let i =0; i<500; i++){
-    const temp = Object.create(SGBP.Message)
-    temp.backAlleyConstructor("Test User" ,1000+i,"This is a test",getRandomInt(1000),"Ames")
-    testArr.push(temp)
-    
-
-}
-testArrSend =[]
-testArrSend =  sortChatRoomByLike(testArrSend,testArr)
-
-console.log(testArrSend)
