@@ -1,26 +1,15 @@
-import {
-    StyleSheet,
-    Text,
-    View,
-    TouchableHighlight,
-    Pressable,
-    Button,
-    Dimensions,
-    Image,
-} from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import { RFValue } from "react-native-responsive-fontsize";
 import * as Location from "expo-location";
 import HomeScreen from "./screens/HomeScreen";
 import ChatScreen from "./screens/ChatScreen";
 import PostScreen from "./screens/PostScreen";
 import NewPostScreen from "./screens/NewPostScreen";
+import AuthScreen from "./screens/AuthScreen";
 import { useEffect, useState } from "react";
 
-const { width: SCREEN_WIDTH, height: SCREEN_HEIGHT } = Dimensions.get("window");
-
 const Stack = createNativeStackNavigator();
+const authStack = createNativeStackNavigator();
 
 export default function App() {
 
@@ -47,6 +36,8 @@ export default function App() {
       getAddress()
     }, []);
 
+    const [authenticated, setAuthenticated] = useState(false)
+    const [user, setUser] = useState()
     const [location, setLocation] = useState([])
     const [address, setAddress] = useState([])
 
@@ -89,7 +80,8 @@ export default function App() {
         },
     ]);
 
-    return (
+    if (authenticated == true) {
+      return (
         <NavigationContainer>
             <Stack.Navigator>
                 <Stack.Screen
@@ -128,5 +120,21 @@ export default function App() {
                 </Stack.Screen>
             </Stack.Navigator>
         </NavigationContainer>
-    );
+      );
+    } else {
+      return (
+        <NavigationContainer>
+            <authStack.Navigator>
+                <authStack.Screen
+                    name="AuthScreen"
+                    options={{
+                        headerShown: false,
+                    }}
+                >
+                    {() => <AuthScreen setAuthenticated={setAuthenticated} />}
+                </authStack.Screen>
+            </authStack.Navigator>
+        </NavigationContainer>
+      )
+    }
 }
