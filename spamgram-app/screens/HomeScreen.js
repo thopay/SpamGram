@@ -15,13 +15,69 @@ import { useNavigation } from "@react-navigation/native";
 
 const { width: SCREEN_WIDTH, height: SCREEN_HEIGHT } = Dimensions.get("window");
 
+const states = {
+    'AZ': 'Arizona',
+    'AL': 'Alabama',
+    'AK': 'Alaska',
+    'AR': 'Arkansas',
+    'CA': 'California',
+    'CO': 'Colorado',
+    'CT': 'Connecticut',
+    'DE': 'Delaware',
+    'FL': 'Florida',
+    'GA': 'Georgia',
+    'HI': 'Hawaii',
+    'ID': 'Idaho',
+    'IL': 'Illinois',
+    'IN': 'Indiana',
+    'IA': 'Iowa',
+    'KS': 'Kansas',
+    'KY': 'Kentucky',
+    'LA': 'Louisiana',
+    'ME': 'Maine',
+    'MD': 'Maryland',
+    'MA': 'Massachusetts',
+    'MI': 'Michigan',
+    'MN': 'Minnesota',
+    'MS': 'Mississippi',
+    'MO': 'Missouri',
+    'MT': 'Montana',
+    'NE': 'Nebraska',
+    'NV': 'Nevada',
+    'NH': 'New Hampshire',
+    'NJ': 'New Jersey',
+    'NM': 'New Mexico',
+    'NY': 'New York',
+    'NC': 'North Carolina',
+    'ND': 'North Dakota',
+    'OH': 'Ohio',
+    'OK': 'Oklahoma',
+    'OR': 'Oregon',
+    'PA': 'Pennsylvania',
+    'RI': 'Rhode Island',
+    'SC': 'South Carolina',
+    'SD': 'South Dakota',
+    'TN': 'Tennessee',
+    'TX': 'Texas',
+    'UT': 'Utah',
+    'VT': 'Vermont',
+    'VA': 'Virginia',
+    'WA': 'Washington',
+    'WV': 'West Virginia',
+    'WI': 'Wisconsin',
+    'WY': 'Wyoming',
+}
+
 export default function HomeScreen(props) {
     const posts = props.posts
     const setPosts = props.setPosts
+    const address = props.address
 
     const navigation = useNavigation();
 
     const [screen, setScreen] = useState(0)
+
+    console.log(address.region)
 
     const updateVotes = (id, value) => {
         let newPosts = posts.map((post) => {
@@ -94,18 +150,18 @@ export default function HomeScreen(props) {
                             </Text>
                         </TouchableHighlight>
                         <TouchableHighlight onPress={() => navigation.navigate("Chat", {
-                            title: 'Ames'
+                            title: address.city
                         })}
                             style={styles.menuOption}
                             underlayColor={"#000"}>
-                            <Text style={styles.menuOptionText}>Ames</Text>
+                            <Text style={styles.menuOptionText}>{ address.city }</Text>
                         </TouchableHighlight>
                         <TouchableHighlight onPress={() => navigation.navigate("Chat", {
-                            title: 'Iowa'
+                            title: states[address.region]
                         })}
                             style={styles.menuOption}
                             underlayColor={"#000"}>
-                            <Text style={styles.menuOptionText}>Iowa</Text>
+                            <Text style={styles.menuOptionText}>{ states[address.region] }</Text>
                         </TouchableHighlight>
                     </View>
                 </View>

@@ -90,7 +90,7 @@ export default function App() {
                         headerShown: false,
                     }}
                 >
-                    {() => <HomeScreen posts={posts} setPosts={setPosts} />}
+                    {() => <HomeScreen posts={posts} setPosts={setPosts} address={address} />}
                 </Stack.Screen>
                 <Stack.Screen
                     name="Chat"
