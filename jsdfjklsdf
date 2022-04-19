@@ -1,0 +1,263 @@
+[1mdiff --git a/.expo/README.md b/.expo/README.md[m
+[1mindex fd146b4..da1acbd 100644[m
+[1m--- a/.expo/README.md[m
+[1m+++ b/.expo/README.md[m
+[36m@@ -1,15 +1,15 @@[m
+[31m-> Why do I have a folder named ".expo" in my project?[m
+[31m-[m
+[31m-The ".expo" folder is created when an Expo project is started using "expo start" command.[m
+[31m-[m
+[31m-> What do the files contain?[m
+[31m-[m
+[31m-- "devices.json": contains information about devices that have recently opened this project. This is used to populate the "Development sessions" list in your development builds.[m
+[31m-- "packager-info.json": contains port numbers and process PIDs that are used to serve the application to the mobile device/simulator.[m
+[31m-- "settings.json": contains the server configuration that is used to serve the application manifest.[m
+[31m-[m
+[31m-> Should I commit the ".expo" folder?[m
+[31m-[m
+[31m-No, you should not share the ".expo" folder. It does not contain any information that is relevant for other developers working on the project, it is specific to your machine.[m
+[31m-[m
+[31m-Upon project creation, the ".expo" folder is already added to your ".gitignore" file.[m
+[32m+[m[32m> Why do I have a folder named ".expo" in my project?[m[41m[m
+[32m+[m[41m[m
+[32m+[m[32mThe ".expo" folder is created when an Expo project is started using "expo start" command.[m[41m[m
+[32m+[m[41m[m
+[32m+[m[32m> What do the files contain?[m[41m[m
+[32m+[m[41m[m
+[32m+[m[32m- "devices.json": contains information about devices that have recently opened this project. This is used to populate the "Development sessions" list in your development builds.[m[41m[m
+[32m+[m[32m- "packager-info.json": contains port numbers and process PIDs that are used to serve the application to the mobile device/simulator.[m[41m[m
+[32m+[m[32m- "settings.json": contains the server configuration that is used to serve the application manifest.[m[41m[m
+[32m+[m[41m[m
+[32m+[m[32m> Should I commit the ".expo" folder?[m[41m[m
+[32m+[m[41m[m
+[32m+[m[32mNo, you should not share the ".expo" folder. It does not contain any information that is relevant for other developers working on the project, it is specific to your machine.[m[41m[m
+[32m+[m[41m[m
+[32m+[m[32mUpon project creation, the ".expo" folder is already added to your ".gitignore" file.[m[41m[m
+[1mdiff --git a/.expo/settings.json b/.expo/settings.json[m
+[1mindex 92bc513..9dcb1d2 100644[m
+[1m--- a/.expo/settings.json[m
+[1m+++ b/.expo/settings.json[m
+[36m@@ -1,8 +1,8 @@[m
+[31m-{[m
+[31m-  "hostType": "lan",[m
+[31m-  "lanType": "ip",[m
+[31m-  "dev": true,[m
+[31m-  "minify": false,[m
+[31m-  "urlRandomness": null,[m
+[31m-  "https": false[m
+[31m-}[m
+[32m+[m[32m{[m[41m[m
+[32m+[m[32m  "hostType": "lan",[m[41m[m
+[32m+[m[32m  "lanType": "ip",[m[41m[m
+[32m+[m[32m  "dev": true,[m[41m[m
+[32m+[m[32m  "minify": false,[m[41m[m
+[32m+[m[32m  "urlRandomness": null,[m[41m[m
+[32m+[m[32m  "https": false[m[41m[m
+[32m+[m[32m}[m[41m[m
+[1mdiff --git a/Procfile b/Procfile[m
+[1mnew file mode 100644[m
+[1mindex 0000000..e1d4131[m
+[1m--- /dev/null[m
+[1m+++ b/Procfile[m
+[36m@@ -0,0 +1 @@[m
+[32m+[m[32mweb: node app.js[m
+[1mdiff --git a/adjective.js b/adjective.js[m
+[1mindex fb08275..e3fa783 100644[m
+[1m--- a/adjective.js[m
+[1m+++ b/adjective.js[m
+[36m@@ -1,1112 +1,1112 @@[m
+[31m-[m
+[31m-const adjectives = [[m
+[31m-    'aback',[m
+[31m-    'abaft',[m
+[31m-    'abandoned',[m
+[31m-    'abashed',[m
+[31m-    'aberrant',[m
+[31m-    'abhorrent',[m
+[31m-    'abiding',[m
+[31m-    'abject',[m
+[31m-    'ablaze',[m
+[31m-    'able',[m
+[31m-    'abnormal',[m
+[31m-    'aboriginal',[m
+[31m-    'abortive',[m
+[31m-    'abounding',[m
+[31m-    'abrasive',[m
+[31m-    'abrupt',[m
+[31m-    'absent',[m
+[31m-    'absorbed',[m
+[31m-    'absorbing',[m
+[31m-    'abstracted',[m
+[31m-    'absurd',[m
+[31m-    'abundant',[m
+[31m-    'abusive',[m
+[31m-    'acceptable',[m
+[31m-    'accessible',[m
+[31m-    'accidental',[m
+[31m-    'accurate',[m
+[31m-    'acid',[m
+[31m-    'acidic',[m
+[31m-    'acoustic',[m
+[31m-    'acrid',[m
+[31m-    'adamant',[m
+[31m-    'adaptable',[m
+[31m-    'addicted',[m
+[31m-    'adhesive',[m
+[31m-    'adjoining',[m
+[31m-    'adorable',[m
+[31m-    'adventurous',[m
+[31m-    'afraid',[m
+[31m-    'aggressive',[m
+[31m-    'agonizing',[m
+[31m-    'agreeable',[m
+[31m-    'ahead',[m
+[31m-    'ajar',[m
+[31m-    'alert',[m
+[31m-    'alike',[m
+[31m-    'alive',[m
+[31m-    'alleged',[m
+[31m-    'alluring',[m
+[31m-    'aloof',[m
+[31m-    'amazing',[m
+[31m-    'ambiguous',[m
+[31m-    'ambitious',[m
+[31m-    'amuck',[m
+[31m-    'amused',[m
+[31m-    'amusing',[m
+[31m-    'ancient',[m
+[31m-    'angry',[m
+[31m-    'animated',[m
+[31m-    'annoyed',[m
+[31m-    'annoying',[m
+[31m-    'anxious',[m
+[31m-    'apathetic',[m
+[31m-    'aquatic',[m
+[31m-    'aromatic',[m
+[31m-    'arrogant',[m
+[31m-    'ashamed',[m
+[31m-    'aspiring',[m
+[31m-    'assorted',[m
+[31m-    'astonishing',[m
+[31m-    'attractive',[m
+[31m-    'auspicious',[m
+[31m-    'automatic',[m
+[31m-    'available',[m
+[31m-    'average',[m
+[31m-    'aware',[m
+[31m-    'awesome',[m
+[31m-    'axiomatic',[m
+[31m-    'bad',[m
+[31m-    'barbarous',[m
+[31m-    'bashful',[m
+[31m-    'bawdy',[m
+[31m-    'beautiful',[m
+[31m-    'befitting',[m
+[31m-    'belligerent',[m
+[31m-    'beneficial',[m
+[31m-    'bent',[m
+[31m-    'berserk',[m
+[31m-    'bewildered',[m
+[31m-    'big',[m
+[31m-    'billowy',[m
+[31m-    'bite-sized',[m
+[31m-    'bitter',[m
+[31m-    'bizarre',[m
+[31m-    'black',[m
+[31m-    'black-and-white',[m
+[31m-    'bloody',[m
+[31m-    'blue',[m
+[31m-    'blue-eyed',[m
+[31m-    'blushing',[m
+[31m-    'boiling',[m
+[31m-    'boorish',[m
+[31m-    'bored',[m
+[31m-    'boring',[m
+[31m-    'bouncy',[m
+[31m-    'boundless',[m
+[31m-    'brainy',[m
+[31m-    'brash',[m
+[31m-    'brave',[m
+[31m-    'brawny',[m
+[31m-    'breakable',[m
+[31m-    'breezy',[m
+[31m-    'brief',[m
+[31m-    'bright',[m
+[31m-    'broad',[m
+[31m-    'broken',[m
+[31m-    'brown',[m
+[31m-    'bumpy',[m
+[31m-    'burly',[m
+[31m-    'bustling',[m
+[31m-    'busy',[m
+[31m-    'cagey',[m
+[31m-    'calculating',[m
+[31m-    'callous',[m
+[31m-    'calm',[m
+[31m-    'capable',[m
+[31m-    'capricious',[m
+[31m-    'careful',[m
+[31m-    'careless',[m
+[31m-    'caring',[m
+[31m-    'cautious',[m
+[31m-    'ceaseless',[m
+[31m-    'certain',[m
+[31m-    'changeable',[m
+[31m-    'charming',[m
+[31m-    'cheap',[m
+[31m-    'cheerful',[m
+[31m-    'chemical',[m
+[31m-    'chief',[m
+[31m-    'childlike',[m
+[31m-    'chilly',[m
+[31m-    'chivalrous',[m
+[31m-    'chubby',[m
+[31m-    'chunky',[m
+[31m-    'clammy',[m
+[31m-    'classy',[m
+[31m-    'clean',[m
+[31m-    'clear',[m
+[31m-    'clever',[m
+[31m-    'cloistered',[m
+[31m-    'cloudy',[m
+[31m-    'closed',[m
+[31m-    'clumsy',[m
+[31m-    'cluttered',[m
+[31m-    'coherent',[m
+[31m-    'cold',[m
+[31m-    'colorful',[m
+[31m-    'colossal',[m
+[31m-    'combative',[m
+[31m-    'comfortable',[m
+[31m-    'common',[m
+[31m-    'complete',[m
+[31m-    'complex',[m
+[31m-    'concerned',[m
+[31m-    'condemned',[m
+[31m-    'confused',[m
+[31m-    'conscious',[m
+[31m-    'cooing',[m
+[31m-    'cool',[m
+[31m-    'cooperative',[m
+[31m-    'coordinated',[m
+[31m-    'courageous',[m
+[31m-    'cowardly',[m
+[31m-    'crabby',[m
+[31m-    'craven',[m
+[31m-    'crazy',[m
+[31m-    'creepy',[m
+[31m-    'crooked',[m
+[31m-    'crowded',[m
+[31m-    'cruel',[m
+[31m-    'cuddly',[m
+[31m-    'cultured',[m
+[31m-    'cumbersome',[m
+[31m-    'curious',[m
+[31m-    'curly',[m
+[31m-    'curved',[m
+[31m-    'curvy',[m
+[31m-    'cut',[m
+[31m-    'cute',[m
+[31m-    'cynical',[m
+[31m-    'daffy',[m
+[31m-    'daily',[m
+[31
