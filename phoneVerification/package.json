@@ -1,15 +1,17 @@
 {
-  "name": "verifytest",
+  "name": "otpverify",
   "version": "1.0.0",
-  "description": "verify test",
-  "main": "verify.js",
+  "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "nick",
+  "keywords": [],
+  "author": "",
   "license": "ISC",
   "dependencies": {
     "express": "^4.17.3",
-    "twilio": "^3.76.0"
-  }
+    "twilio": "^3.76.1"
+  },
+  "devDependencies": {},
+  "description": ""
 }
