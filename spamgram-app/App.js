@@ -7,6 +7,7 @@ import PostScreen from "./screens/PostScreen";
 import NewPostScreen from "./screens/NewPostScreen";
 import AuthScreen from "./screens/AuthScreen";
 import { useEffect, useState } from "react";
+import VerifyScreen from "./screens/VerifyScreen";
 
 const Stack = createNativeStackNavigator();
 const authStack = createNativeStackNavigator();
@@ -29,7 +30,6 @@ export default function App() {
           longitude: userLocation.coords.longitude,
       })
       setAddress(userAdress[0])
-      console.log(`City: ${address.city} - State: ${address.region}`)
     }
 
     useEffect(async () => {
@@ -37,9 +37,10 @@ export default function App() {
     }, []);
 
     const [authenticated, setAuthenticated] = useState(false)
-    const [user, setUser] = useState()
+    const [user, setUser] = useState({})
     const [location, setLocation] = useState([])
     const [address, setAddress] = useState([])
+    const [phone, setPhone] = useState('')
 
     const [posts, setPosts] = useState([
         {
@@ -50,6 +51,7 @@ export default function App() {
             authorEmoji: "🐭",
             timestamp: 1648776191534,
             votes: 0,
+            comments: 0
         },
         {
             id: 1,
@@ -59,6 +61,7 @@ export default function App() {
             authorEmoji: "🦊",
             timestamp: 1648776191534,
             votes: 0,
+            comments: 0
         },
         {
             id: 2,
@@ -68,16 +71,8 @@ export default function App() {
             authorEmoji: "🦍",
             timestamp: 1648776191534,
             votes: 0,
-        },
-        {
-            id: 3,
-            text: "I wanna get hit by cyride.",
-            author: "You",
-            authorColor: "#FCCFFD",
-            authorEmoji: "🐼",
-            timestamp: 1648776191534,
-            votes: 0,
-        },
+            comments: 0
+        }
     ]);
 
     if (authenticated == true) {
@@ -90,7 +85,7 @@ export default function App() {
                         headerShown: false,
                     }}
                 >
-                    {() => <HomeScreen posts={posts} setPosts={setPosts} address={address} />}
+                    {() => <HomeScreen posts={posts} setPosts={setPosts} address={address} user={user} />}
                 </Stack.Screen>
                 <Stack.Screen
                     name="Chat"
@@ -116,7 +111,7 @@ export default function App() {
                         gestureDirection: "vertical",
                     }}
                 >
-                    {() => <NewPostScreen posts={posts} setPosts={setPosts} />}
+                    {() => <NewPostScreen posts={posts} setPosts={setPosts} user={user} />}
                 </Stack.Screen>
             </Stack.Navigator>
         </NavigationContainer>
@@ -131,7 +126,15 @@ export default function App() {
                         headerShown: false,
                     }}
                 >
-                    {() => <AuthScreen setAuthenticated={setAuthenticated} />}
+                    {() => <AuthScreen setAuthenticated={setAuthenticated} phone={phone} setPhone={setPhone} />}
+                </authStack.Screen>
+                <authStack.Screen
+                    name="Verify"
+                    options={{
+                        headerShown: false,
+                    }}
+                >
+                    {() => <VerifyScreen setAuthenticated={setAuthenticated} setUser={setUser} phone={phone} />}
                 </authStack.Screen>
             </authStack.Navigator>
         </NavigationContainer>

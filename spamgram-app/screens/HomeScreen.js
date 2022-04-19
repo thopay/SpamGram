@@ -72,6 +72,7 @@ export default function HomeScreen(props) {
     const posts = props.posts
     const setPosts = props.setPosts
     const address = props.address
+    const user = props.user
 
     const navigation = useNavigation();
 
@@ -102,7 +103,7 @@ export default function HomeScreen(props) {
                     display: screen == 0 ? '' : 'none'
                 }}
             >
-                <HomeHeader />
+                <HomeHeader user={user} />
                 <View
                     style={{
                         flex: 1,
@@ -115,6 +116,7 @@ export default function HomeScreen(props) {
                         setPosts={setPosts}
                         navigation={navigation}
                         voteUtils={{ updateVotes, getVotes }}
+                        user={user}
                     />
                 </View>
             </View>
@@ -133,7 +135,7 @@ export default function HomeScreen(props) {
                     }}
                 >
                     <View style={styles.headSection}>
-                        <Text style={styles.header}>Welcome PurplePanda3!</Text>
+                        <Text style={styles.header}>Welcome {user.name}!</Text>
                         <Image source={require("../assets/star.png")} style={{
                             margin: RFValue(10, 926)
                         }}/>
@@ -141,7 +143,8 @@ export default function HomeScreen(props) {
                     </View>
                     <View>
                         <TouchableHighlight onPress={() => navigation.navigate("Chat", {
-                            title: 'Iowa State University'
+                            title: 'Iowa State University',
+                            user
                         })}
                             style={styles.menuOption}
                             underlayColor={"#000"}>
@@ -150,14 +153,16 @@ export default function HomeScreen(props) {
                             </Text>
                         </TouchableHighlight>
                         <TouchableHighlight onPress={() => navigation.navigate("Chat", {
-                            title: address.city
+                            title: address.city,
+                            user
                         })}
                             style={styles.menuOption}
                             underlayColor={"#000"}>
                             <Text style={styles.menuOptionText}>{ address.city }</Text>
                         </TouchableHighlight>
                         <TouchableHighlight onPress={() => navigation.navigate("Chat", {
-                            title: states[address.region]
+                            title: states[address.region],
+                            user
                         })}
                             style={styles.menuOption}
                             underlayColor={"#000"}>

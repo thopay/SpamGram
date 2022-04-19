@@ -13,6 +13,7 @@ LogBox.ignoreLogs([
 function PostCard(props) {
     const [pressed, setPressed] = useState(-1);
     const [votes, setVotes] = useState(props.voteUtils.getVotes(props.data.id));
+    const user = props.user
 
     const upvote = () => {
         if (pressed == -1) {
@@ -49,6 +50,7 @@ function PostCard(props) {
                     upvote,
                     downvote,
                     pressed,
+                    user
                 })
             }
         >
@@ -149,7 +151,7 @@ function PostCard(props) {
                                         fontSize: RFValue(18, 926),
                                     }}
                                 >
-                                    1 Comment
+                                    {props.data.comments == 0 ? '0 Comments' : (props.data.comments == 1 ? '1 Comment' : props.data.comments + ' Comments')}
                                 </Text>
                             </View>
                         </View>

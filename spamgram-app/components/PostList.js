@@ -8,7 +8,7 @@ import {
 import { RFValue } from "react-native-responsive-fontsize";
 import PostCard from "./PostCard";
 
-function PostList({ posts, setPosts, navigation, voteUtils }) {
+function PostList({ posts, setPosts, navigation, voteUtils, user }) {
 
     const [refreshing, setRefreshing] = useState(false)
 
@@ -38,6 +38,7 @@ function PostList({ posts, setPosts, navigation, voteUtils }) {
                             data={post.item}
                             navigation={navigation}
                             voteUtils={voteUtils}
+                            user={user}
                         />
                     );
                 }}

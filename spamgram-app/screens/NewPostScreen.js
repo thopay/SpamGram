@@ -18,6 +18,7 @@ export default function PostScreen(props) {
 
 	const posts = props.posts
     const setPosts = props.setPosts
+	const user = props.user
 
 	const [backPressed, setBackPressed] = useState(false);
     const [sendPressed, setSendPressed] = useState(false);
@@ -32,11 +33,12 @@ export default function PostScreen(props) {
                 {
                     id: posts.length + 1,
                     text,
-                    author: "You",
+                    author: user.name,
                     timestamp: Date.now(),
-					authorColor: "#FCCFFD",
-					authorEmoji: "🐼",
+					authorColor: user.color,
+					authorEmoji: user.emoji,
 					votes: 0,
+					comments: 0
                 },
             ]);
             setText();

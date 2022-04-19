@@ -10,6 +10,7 @@ import PostCardDetailed from "../components/PostCardDetailed";
 const { width: SCREEN_WIDTH, height: SCREEN_HEIGHT } = Dimensions.get("window");
 
 export default function PostScreen(props) {
+
     return (
         <View
             style={{
@@ -17,7 +18,7 @@ export default function PostScreen(props) {
                 backgroundColor: "#090909",
             }}
         >
-            <HomeHeader />
+            <HomeHeader user={props.route.params.user}/>
             <View
                 style={{
                     flex: 1,

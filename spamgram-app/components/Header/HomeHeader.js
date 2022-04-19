@@ -9,7 +9,7 @@ import { Entypo } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
 import Avatar from "../Avatar";
 
-function HomeHeader() {
+function HomeHeader({ user }) {
     const [pressed, setPressed] = useState(false);
     const navigation = useNavigation();
 
@@ -53,21 +53,21 @@ function HomeHeader() {
                         <Avatar
                             height={48}
                             width={48}
-                            color={"#FCCFFD"}
+                            color={user.color}
                             radius={"50%"}
                             fontSize={32}
-                            emoji={"🐼"}
+                            emoji={user.emoji}
                         />
                         <Text
                             style={{
-                                color: "#FCCFFD",
+                                color: user.color,
                                 textAlign: "center",
                                 fontSize: RFValue(32, 926),
                                 fontWeight: "500",
                                 marginLeft: 10,
                             }}
                         >
-                            PurplePanda3
+                            {user.name}
                         </Text>
                     </View>
                 </View>

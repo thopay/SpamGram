@@ -9,7 +9,7 @@ import { RFValue } from "react-native-responsive-fontsize";
 import { Feather } from "@expo/vector-icons";
 import { useState } from "react";
 
-function CommentInput({ comments, setComments, setFocused }) {
+function CommentInput({ comments, setComments, setFocused, user }) {
     const [pressed, setPressed] = useState(false);
 
     const [text, setText] = useState();
@@ -21,7 +21,7 @@ function CommentInput({ comments, setComments, setFocused }) {
                 {
                     id: comments.length + 1,
                     text,
-                    author: "You",
+                    author: user.name,
                     timestamp: Date.now(),
                 },
             ]);

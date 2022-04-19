@@ -11,18 +11,12 @@ import moment from "moment";
 
 function PostCardDetailed(props) {
     const post = props.props.route.params.post;
+    const user = props.props.route.params.user
 
     const [backPressed, setBackPressed] = useState(false);
     const [sharePressed, setSharePressed] = useState(false);
     const [focused, setFocused] = useState(false);
-    const [comments, setComments] = useState([
-        {
-            id: 0,
-            text: "farts",
-            author: "RedRat19",
-            timestamp: 1648776576289,
-        },
-    ]);
+    const [comments, setComments] = useState([]);
 
     const [detailedPressed, setDetailedPressed] = useState(
         props.props.route.params.pressed
@@ -255,6 +249,7 @@ function PostCardDetailed(props) {
                 comments={comments}
                 setComments={setComments}
                 setFocused={setFocused}
+                user={user}
             />
         </View>
     );

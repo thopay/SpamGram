@@ -10,7 +10,7 @@ import { AntDesign } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
 import Avatar from "../Avatar";
 
-function Chat({ chatRoom }) {
+function Chat({ chatRoom, user }) {
     const [pressed, setPressed] = useState(false);
     const navigation = useNavigation();
 
@@ -78,21 +78,21 @@ function Chat({ chatRoom }) {
                         <Avatar
                             height={24}
                             width={24}
-                            color={"#FCCFFD"}
+                            color={user.color}
                             radius={"50%"}
                             fontSize={12}
-                            emoji={"🐼"}
+                            emoji={user.emoji}
                         />
                         <Text
                             style={{
-                                color: "#FCCFFD",
+                                color: user.color,
                                 textAlign: "center",
                                 marginBottom: 10,
                                 fontSize: RFValue(24, 926),
                                 marginLeft: 10,
                             }}
                         >
-                            PurplePanda3
+                            {user.name}
                         </Text>
                     </View>
                     <Text

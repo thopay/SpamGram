@@ -9,7 +9,7 @@ import { RFValue } from "react-native-responsive-fontsize";
 import { Feather } from "@expo/vector-icons";
 import { useState } from "react";
 
-function MessageInput({ messages, setMessages, setFocused }) {
+function MessageInput({ messages, setMessages, setFocused, user }) {
     const [pressed, setPressed] = useState(false);
 
     const [text, setText] = useState();
@@ -21,9 +21,9 @@ function MessageInput({ messages, setMessages, setFocused }) {
                 {
                     id: messages.length + 1,
                     text,
-                    author: "You",
-                    authorColor: "#FCCFFD",
-                    authorEmoji: "🐼",
+                    author: user.name,
+                    authorColor: user.color,
+                    authorEmoji: user.emoji,
                     timestamp: Date.now(),
                 },
             ]);

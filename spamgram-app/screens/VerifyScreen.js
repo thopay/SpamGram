@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
     Text,
     View,
@@ -6,16 +6,48 @@ import {
     StyleSheet,
     Dimensions,
     TextInput,
-    Keyboard
+    Keyboard,
+	ActivityIndicator
 } from "react-native";
 import { RFValue } from "react-native-responsive-fontsize";
 import { useNavigation } from "@react-navigation/native";
+import axios from 'axios';
 
 const { width: SCREEN_WIDTH, height: SCREEN_HEIGHT } = Dimensions.get("window");
 
-function AuthScreen({ setAuthenticated, phone, setPhone }) {
+function VerifyScreen({ setAuthenticated, setUser, phone }) {
 
-	const navigation = useNavigation();
+	const [code, setCode] = useState('')
+	const [loading, setLoading] = useState(false)
+	const navigation = useNavigation()
+
+	useEffect(() => {
+		console.log(`Sending request to get text! ${phone}`)
+		axios({
+			method: 'GET',
+			url: `https://spamgramotp.herokuapp.com/login?phonenumber=${phone}`,
+		})
+	}, [])
+
+	const checkCode = () => {
+		setLoading(true)
+		axios({
+			method: 'GET',
+			url: `https://spamgramotp.herokuapp.com/verify?phonenumber=${phone}&code=${code}`,
+		}).then((response) => {
+			if (response.data.data.valid) {
+				setAuthenticated(true)
+				setUser({
+					id: 0,
+					name: 'RedFox4',
+					color: '#FCCFFD',
+					emoji: '🦊'
+				})
+			} else {
+				setLoading(false)
+			}
+		});
+	}
 
     return (
 		<View
@@ -32,11 +64,11 @@ function AuthScreen({ setAuthenticated, phone, setPhone }) {
 				}}
 			>
 				<View style={styles.headSection}>
-					<Text style={styles.header}>Welcome to SpamGram!</Text>
+					<Text style={styles.header}>Please enter the verification code sent to your phone.</Text>
 				</View>
 				<View>
 					<TextInput
-						value={phone}
+						value={code}
 						style={{
 							padding: RFValue(24, 926),
 							margin: RFValue(12, 926),
@@ -49,33 +81,31 @@ function AuthScreen({ setAuthenticated, phone, setPhone }) {
 							fontSize: RFValue(28, 926),
 							color: 'white'
 						}}
-						onChangeText={(newPhone) => {
-							setPhone(newPhone)
-							if (newPhone.length >= 10) {
+						onChangeText={(newCode) => {
+							setCode(newCode)
+							if (newCode.length >= 6) {
 								Keyboard.dismiss()
 							}
 						}}
 						placeholderTextColor={'rgba(255, 255, 255, 0.5)'}
-						placeholder={"Phone Number"}
-						keyboardType={'phone-pad'}
+						placeholder={"Verification Code"}
+						keyboardType={'number-pad'}
 					/>
 				</View>
 				<View>
 					<TouchableHighlight
-						onPress={() => navigation.navigate("Verify", {
-							setAuthenticated,
-							phone
-						})}
+						onPress={() =>
+							checkCode()
+						}
 						style={[styles.menuOption,{
-							opacity: phone.length >= 10 ? 1.0 : 0.5,
+							opacity: code.length >= 6 ? 1.0 : 0.5,
 						}]}
-						disabled={!(phone.length >= 10)}
+						disabled={!(code.length >= 6)}
 						underlayColor={"#000"}
 					>
-						<Text style={styles.menuOptionText}>
-							Continue
-						</Text>
+						{loading ? <ActivityIndicator size="large" color="#fff" /> : <Text style={styles.menuOptionText}>Continue</Text>}
 					</TouchableHighlight>
+					
 				</View>
 			</View>
 		</View>
@@ -91,8 +121,9 @@ const styles = StyleSheet.create({
     },
     header: {
         color: "white",
-        fontSize: RFValue(60, 926),
+        fontSize: RFValue(45, 926),
         fontWeight: "bold",
+		textAlign: 'center'
     },
     subheader: {
         color: "white",
@@ -112,6 +143,7 @@ const styles = StyleSheet.create({
         color: "white",
         fontSize: RFValue(32, 926),
         textAlign: "center",
+		justifyContent: "center",
     },
     headSection: {
         justifyContent: "center",
@@ -120,4 +152,4 @@ const styles = StyleSheet.create({
     },
 })
 
-export default AuthScreen;
+export default VerifyScreen;

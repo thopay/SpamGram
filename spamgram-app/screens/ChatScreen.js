@@ -8,6 +8,7 @@ import Chat from "../components/Chat";
 export default function ChatScreen(props) {
 
     const chatRoom = props.route.params
+    const user = props.route.params.user
 
     const [messages, setMessages] = useState([
         {
@@ -32,7 +33,7 @@ export default function ChatScreen(props) {
 
     return (
         <View style={styles.container}>
-            <ChatHeader chatRoom={chatRoom} />
+            <ChatHeader chatRoom={chatRoom} user={user} />
             <Chat
                 messages={messages}
                 setMessages={setMessages}
@@ -42,6 +43,7 @@ export default function ChatScreen(props) {
                 messages={messages}
                 setMessages={setMessages}
                 setFocused={setFocused}
+                user={user}
             />
         </View>
     );
