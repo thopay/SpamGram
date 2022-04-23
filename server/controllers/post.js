@@ -1,6 +1,8 @@
 import mongoose from 'mongoose';
 import PostMessage from '../models/postMessage.js';
 
+
+var postsGlobal;
 export const getPost = async (req, res) => {
 
     try {
@@ -8,18 +10,25 @@ export const getPost = async (req, res) => {
         var lat = req.query.lat;
         var long = req.query.long;
         const postMessages = await PostMessage.find();
-        // loop through posts
         for (var i = 0; i < postMessages.length; i++) {
             // add posts close to current long lat to array
             if (closeTo(postMessages[i].lat, lat) && closeTo(postMessages[i].long, long)) {
                 posts.push(postMessages[i]);
             }
         }
-        // return array
-        res.status(200).json(posts);
+        if (req.query.sortBy == "likes") {
+            // know they want posts sorted by likes
+            res.status(200).json(posts.sort((a, b) => parseFloat(b.likeCount) - parseFloat(a.likeCount)));
+        } else if (req.query.sortBy == "date") {
+            // know they want by date
+            res.status(200).json(posts.reverse());
+        } else{
+            res.status(200).json(posts);
+        }
     }
     catch (error) {
-        res.status(404), json({ message: error.message });
+        res.status(404).json({ message: error });
+        console.log(error)
     }
 
 }
@@ -30,7 +39,7 @@ export const createPost = async (req, res) => {
         await newPost.save();
         res.status(200).json(newPost);
     } catch (error) {
-        res.status(409).json({ message: error.message });
+        res.status(409).json({ message: error });
     }
 
 }
@@ -48,7 +57,8 @@ export const likePost = async (req, res) => {
 }
 
 function closeTo(post, user) {
+    const CLOSE_TO_CONSTANT = 10;
     if (post === null || user === null) return false;
-    if (Math.abs(user-post) < 10) return true;
+    if (Math.abs(user - post) < CLOSE_TO_CONSTANT) return true;
     return false;
 }

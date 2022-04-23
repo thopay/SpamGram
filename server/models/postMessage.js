@@ -3,6 +3,7 @@ import mongoose from 'mongoose';
 const postSchema = mongoose.Schema({
     message: String,
     creator: String,
+    userid: String,
     long: Number,
     lat: Number,
     likeCount: {
