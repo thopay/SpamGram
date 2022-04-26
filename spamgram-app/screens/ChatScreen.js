@@ -1,33 +1,70 @@
 import { View, StyleSheet, Dimensions } from "react-native";
 import { RFValue } from "react-native-responsive-fontsize";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import ChatHeader from "../components/Header/ChatHeader";
 import MessageInput from "../components/MessageInput";
 import Chat from "../components/Chat";
+import socketIO from 'socket.io-client';
 
 export default function ChatScreen(props) {
 
     const chatRoom = props.route.params
     const user = props.route.params.user
 
-    const [messages, setMessages] = useState([
-        {
-            id: 0,
-            text: "bruh",
-            author: "BlueFox78",
-            authorColor: "#CFE1FD",
-            authorEmoji: "🦊",
-            timestamp: 1648593082395,
-        },
-        {
-            id: 1,
-            text: "This math 165 hw is killing me",
-            author: "You",
-            authorColor: "#FCCFFD",
-            authorEmoji: "🐼",
-            timestamp: 1648593082395,
-        },
-    ]);
+    const [pSocket, setSocket] = useState(null);
+
+    const [messages, setMessages] = useState([]);
+
+    const [allowSend, setAllowSend] = useState(true);
+
+    const addMessage = (msg) => {
+        setAllowSend(false)
+        setMessages(messages => {return [
+            ...messages,
+            {
+                id: msg.id,
+                text: msg.text,
+                author: msg.author,
+                authorColor: msg.authorColor,
+                authorEmoji: msg.authorEmoji,
+                timestamp: msg.timestamp,
+            },
+        ]})
+    }
+
+    useEffect(() => {
+        setAllowSend(true)
+    }, [messages])
+
+    useEffect(() => {
+        let socket = socketIO('https://spamgram.herokuapp.com/', {
+            transports: ['websocket'],
+            jsonp: false
+        });
+        setSocket(socket)
+        console.log("Attempting connect")
+        socket.connect()
+
+        socket.on('connect', () => {
+            console.log("Connected to chat room!")
+
+            socket.emit('joinRoom', {
+                username: user.name,
+                color: user.color,
+                emoji: user.emoji,
+                room: chatRoom.title
+            })
+
+            socket.on('message', msg => {
+                addMessage(msg)
+            })
+        })
+
+        return () => {
+            socket.close()
+            console.log("Closed connection")
+        }
+    }, [])
 
     const [focused, setFocused] = useState(false);
 
@@ -40,10 +77,10 @@ export default function ChatScreen(props) {
                 focused={focused}
             />
             <MessageInput
-                messages={messages}
-                setMessages={setMessages}
                 setFocused={setFocused}
                 user={user}
+                socket={pSocket}
+                allowSend={allowSend}
             />
         </View>
     );

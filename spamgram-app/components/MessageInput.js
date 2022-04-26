@@ -9,24 +9,14 @@ import { RFValue } from "react-native-responsive-fontsize";
 import { Feather } from "@expo/vector-icons";
 import { useState } from "react";
 
-function MessageInput({ messages, setMessages, setFocused, user }) {
+function MessageInput({ setFocused, user, socket, allowSend }) {
     const [pressed, setPressed] = useState(false);
 
     const [text, setText] = useState();
 
     function sendMessage() {
         if (text != "" && text != null) {
-            setMessages([
-                ...messages,
-                {
-                    id: messages.length + 1,
-                    text,
-                    author: user.name,
-                    authorColor: user.color,
-                    authorEmoji: user.emoji,
-                    timestamp: Date.now(),
-                },
-            ]);
+            socket.emit('chatMessage', text)
             setText();
         }
     }
@@ -87,6 +77,7 @@ function MessageInput({ messages, setMessages, setFocused, user }) {
                             width: RFValue(60, 926),
                         }}
                         underlayColor={"#454545"}
+                        disabled={!allowSend}
                     >
                         <Feather
                             name="send"

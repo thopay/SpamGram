@@ -143,22 +143,22 @@ export default function HomeScreen(props) {
                     </View>
                     <View>
                         <TouchableHighlight onPress={() => navigation.navigate("Chat", {
-                            title: 'Iowa State University',
+                            title: 'Iowa State University' + ", " + address.region,
                             user
                         })}
                             style={styles.menuOption}
                             underlayColor={"#000"}>
                             <Text style={styles.menuOptionText}>
-                                Iowa State University
+                                Iowa State University{ ", " + address.region }
                             </Text>
                         </TouchableHighlight>
                         <TouchableHighlight onPress={() => navigation.navigate("Chat", {
-                            title: address.city,
+                            title: address.city + ", " + address.region,
                             user
                         })}
                             style={styles.menuOption}
                             underlayColor={"#000"}>
-                            <Text style={styles.menuOptionText}>{ address.city }</Text>
+                            <Text style={styles.menuOptionText}>{ address.city + ", " + address.region }</Text>
                         </TouchableHighlight>
                         <TouchableHighlight onPress={() => navigation.navigate("Chat", {
                             title: states[address.region],
