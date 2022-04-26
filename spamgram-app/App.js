@@ -1,83 +1,143 @@
-import { StyleSheet, Text, View, TouchableHighlight, Pressable, Button, Dimensions, Image } from 'react-native';
-import { NavigationContainer } from '@react-navigation/native';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { RFValue } from "react-native-responsive-fontsize";
-import HomeScreen from './screens/HomeScreen';
-import ChatScreen from './screens/ChatScreen';
-
-const {
-  width: SCREEN_WIDTH,
-  height: SCREEN_HEIGHT
-} = Dimensions.get('window');
-
-function DetailsScreen({ navigation }) {
-  return (
-    <View style={{
-      flex: 1,
-      alignItems: 'center',
-      justifyContent: 'center',
-      backgroundColor: '#262626'
-    }}>
-      <Text>Details Screen</Text>
-      <Button 
-        title="Go to Home"
-        onPress={() => navigation.navigate('Home')}
-      />
-    </View>
-  )
-}
+import { NavigationContainer } from "@react-navigation/native";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import * as Location from "expo-location";
+import HomeScreen from "./screens/HomeScreen";
+import ChatScreen from "./screens/ChatScreen";
+import PostScreen from "./screens/PostScreen";
+import NewPostScreen from "./screens/NewPostScreen";
+import AuthScreen from "./screens/AuthScreen";
+import { useEffect, useState } from "react";
+import VerifyScreen from "./screens/VerifyScreen";
 
 const Stack = createNativeStackNavigator();
+const authStack = createNativeStackNavigator();
 
 export default function App() {
-  return (
-    <NavigationContainer>
-      <Stack.Navigator>
-        <Stack.Screen name="Home" component={HomeScreen} options={{
-          headerShown: false
-        }}/>
-        <Stack.Screen name="Chat" component={ChatScreen} options={{
-          headerShown: false
-        }}/>
-      </Stack.Navigator>
-    </NavigationContainer>
-  );
-}
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#262626',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  header: {
-    color: 'white',
-    fontSize: RFValue(30, 926),
-    fontWeight: 'bold'
-  },
-  subheader: {
-    color: 'white',
-    fontSize: RFValue(30, 926),
-    fontWeight: '200'
-  },
-  menuOption: {
-    padding: RFValue(24, 926),
-    margin: RFValue(12, 926),
-    backgroundColor: '#0F0F10',
-    width: (399 / 428) * SCREEN_WIDTH,
-    borderColor: '#FCCFFD',
-    borderWidth: 1,
-    borderRadius: 15,
-  },
-  menuOptionText: {
-    color: 'white',
-    fontSize: RFValue(32, 926),
-    textAlign: 'center',
-  },
-  headSection: {
-    justifyContent: 'center',
-    alignItems: 'center',
-    paddingBottom: RFValue(50, 926)
-  }
-});
+    const getAddress = async () => {
+      let { status } = await Location.requestForegroundPermissionsAsync()
+
+      if (status !== "granted") {
+          alert("Location permissions denied!")
+          return
+      }
+
+      const userLocation = await Location.getCurrentPositionAsync({})
+      setLocation(userLocation)
+
+      let userAdress = await Location.reverseGeocodeAsync({
+          latitude: userLocation.coords.latitude,
+          longitude: userLocation.coords.longitude,
+      })
+      setAddress(userAdress[0])
+    }
+
+    useEffect(async () => {
+      getAddress()
+    }, []);
+
+    const [authenticated, setAuthenticated] = useState(false)
+    const [user, setUser] = useState({})
+    const [location, setLocation] = useState([])
+    const [address, setAddress] = useState([])
+    const [phone, setPhone] = useState('')
+
+    const [posts, setPosts] = useState([
+        {
+            id: 0,
+            text: "I'm in love with Chris Evans",
+            author: "RedRat19",
+            authorColor: "#FDCFCF",
+            authorEmoji: "🐭",
+            timestamp: 1648776191534,
+            votes: 0,
+            comments: 0
+        },
+        {
+            id: 1,
+            text: "oh yeah oh yeah oh yeah oh yeah oh yeah oh yehjf ljfsflkjlkjff",
+            author: "BlueFox78",
+            authorColor: "#CFE1FD",
+            authorEmoji: "🦊",
+            timestamp: 1648776191534,
+            votes: 0,
+            comments: 0
+        },
+        {
+            id: 2,
+            text: "Who tryna meet in Beardshear rn??",
+            author: "GreenGorilla9",
+            authorColor: "#D0FDCF",
+            authorEmoji: "🦍",
+            timestamp: 1648776191534,
+            votes: 0,
+            comments: 0
+        }
+    ]);
+
+    if (authenticated == true) {
+      return (
+        <NavigationContainer>
+            <Stack.Navigator>
+                <Stack.Screen
+                    name="Home"
+                    options={{
+                        headerShown: false,
+                    }}
+                >
+                    {() => <HomeScreen posts={posts} setPosts={setPosts} address={address} user={user} />}
+                </Stack.Screen>
+                <Stack.Screen
+                    name="Chat"
+                    component={ChatScreen}
+                    options={{
+                        headerShown: false,
+                    }}
+                />
+                <Stack.Screen
+                    name="Post"
+                    component={PostScreen}
+                    options={{
+                        headerShown: false,
+                    }}
+                />
+                <Stack.Screen
+                    name="NewPost"
+                    options={{
+                        headerShown: false,
+                        presentation: "transparentModal",
+                        cardOverlayEnabled: true,
+                        gestureEnabled: true,
+                        gestureDirection: "vertical",
+                    }}
+                >
+                    {() => <NewPostScreen posts={posts} setPosts={setPosts} user={user} />}
+                </Stack.Screen>
+            </Stack.Navigator>
+        </NavigationContainer>
+      );
+    } else {
+      return (
+        <NavigationContainer>
+            <authStack.Navigator>
+                <authStack.Screen
+                    name="AuthScreen"
+                    options={{
+                        headerShown: false,
+                    }}
+                >
+                    {() => <AuthScreen setAuthenticated={setAuthenticated} phone={phone} setPhone={setPhone} />}
+                </authStack.Screen>
+                <authStack.Screen
+                    name="Verify"
+                    options={{
+                        headerShown: false,
+                    }}
+                >
+                    {() => <VerifyScreen setAuthenticated={setAuthenticated} setUser={setUser} phone={phone} />}
+                </authStack.Screen>
+            </authStack.Navigator>
+        </NavigationContainer>
+      )
+    }
+}

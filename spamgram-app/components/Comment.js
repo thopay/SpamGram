@@ -1,26 +1,22 @@
 import { View, Text } from "react-native";
 import { RFValue } from "react-native-responsive-fontsize";
 import moment from "moment";
-import Avatar from "./Avatar";
 
-function ChatMessage(props) {
+function Comment(props) {
     return (
         <View
             style={{
                 width: "100%",
                 backgroundColor: "#0F0F10",
-                minHeight: RFValue(80, 926),
+                minHeight: RFValue(100, 926),
                 borderRadius: 15,
-                borderColor: props.data.authorColor,
                 borderWidth: 1,
                 padding: 10,
                 marginBottom: 10,
-                marginTop: 10,
             }}
         >
             <View
                 style={{
-                    flex: 1,
                     flexDirection: "row",
                 }}
             >
@@ -31,20 +27,11 @@ function ChatMessage(props) {
                         width: "50%",
                     }}
                 >
-                    <Avatar
-                        height={22}
-                        width={22}
-                        color={props.data.authorColor}
-                        radius={"50%"}
-                        fontSize={12}
-                        emoji={props.data.authorEmoji}
-                    />
                     <Text
                         style={{
-                            color: props.data.authorColor,
+                            color: "rgba(255, 255, 255, 0.5)",
                             overflow: "hidden",
-                            fontSize: RFValue(22, 926),
-                            marginLeft: 5,
+                            fontSize: RFValue(18, 926),
                         }}
                     >
                         {props.data.author}
@@ -59,7 +46,7 @@ function ChatMessage(props) {
                     <Text
                         style={{
                             color: "rgba(255, 255, 255, 0.5)",
-                            fontSize: RFValue(16, 926),
+                            fontSize: RFValue(18, 926),
                         }}
                     >
                         {moment(props.data.timestamp).fromNow()}
@@ -79,4 +66,4 @@ function ChatMessage(props) {
     );
 }
 
-export default ChatMessage;
+export default Comment;

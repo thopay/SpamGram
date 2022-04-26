@@ -9,21 +9,19 @@ import { RFValue } from "react-native-responsive-fontsize";
 import { Feather } from "@expo/vector-icons";
 import { useState } from "react";
 
-function MessageInput({ messages, setMessages, setFocused, user }) {
+function CommentInput({ comments, setComments, setFocused, user }) {
     const [pressed, setPressed] = useState(false);
 
     const [text, setText] = useState();
 
-    function sendMessage() {
+    function sendComment() {
         if (text != "" && text != null) {
-            setMessages([
-                ...messages,
+            setComments([
+                ...comments,
                 {
-                    id: messages.length + 1,
+                    id: comments.length + 1,
                     text,
                     author: user.name,
-                    authorColor: user.color,
-                    authorEmoji: user.emoji,
                     timestamp: Date.now(),
                 },
             ]);
@@ -35,18 +33,18 @@ function MessageInput({ messages, setMessages, setFocused, user }) {
         <KeyboardAvoidingView
             behavior={Platform.OS === "ios" ? "padding" : "height"}
             style={styles.container}
-            keyboardVerticalOffset={RFValue(115, 926)}
+            keyboardVerticalOffset={RFValue(160, 926)}
         >
             <View
                 style={{
                     flex: 1,
-                    padding: 20,
+                    padding: 15,
                     flexDirection: "row",
                 }}
             >
                 <TextInput
                     value={text}
-                    placeholder="New Message..."
+                    placeholder="New Comment..."
                     style={{
                         backgroundColor: "#000",
                         padding: 10,
@@ -75,7 +73,7 @@ function MessageInput({ messages, setMessages, setFocused, user }) {
                         onPressOut={() => {
                             setPressed(false);
                         }}
-                        onPress={() => sendMessage()}
+                        onPress={() => sendComment()}
                         style={{
                             backgroundColor: "#000000",
                             borderRadius: "50%",
@@ -106,12 +104,11 @@ const styles = StyleSheet.create({
         backgroundColor: "#1D1E21",
         position: "absolute",
         bottom: 0,
-        height: RFValue(150, 926),
         width: "100%",
-        borderTopLeftRadius: 15,
-        borderTopRightRadius: 15,
+        borderBottomLeftRadius: 15,
+        borderBottomRightRadius: 15,
         zIndex: 3,
     },
 });
 
-export default MessageInput;
+export default CommentInput;
