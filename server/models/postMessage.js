@@ -10,11 +10,12 @@ const postSchema = mongoose.Schema({
         type: Number,
         default: 0
     },
-    createdAt: {
-        type: Date,
-        default: new Date()
-
-    },
+    createdAt: Number,
+    creatorColor: String,
+    creatorEmoji: String,
+    comments: Number,
+    likedBy: [String],
+    dislikedBy: [String],
 });
 
 const PostMessage = mongoose.model('PostMessage', postSchema);

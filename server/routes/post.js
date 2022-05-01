@@ -1,15 +1,19 @@
 import express from 'express';
-import {getPost, createPost, likePost} from '../controllers/post.js';
+import {getPost, createPost, likePost, dislikePost, createComment, getComments} from '../controllers/post.js';
 import {signup, getlogin} from '../controllers/login.js';
 import Username from '../models/login.js';
 const router = express.Router();
 
 router.get('/post', getPost);
 router.post('/post', createPost);
-router.patch('/:id/likePost', likePost);
+router.get('/post/likePost', likePost);
+router.get('/post/dislikePost', dislikePost);
+
+router.get('/post/comment', getComments);
+router.post('/post/comment', createComment);
 
 // sign up
-router.post('/login', signup);
+router.get('/signup', signup);
 
 // auth
 router.get('/login', getlogin);

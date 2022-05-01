@@ -2,7 +2,8 @@ import mongoose from 'mongoose';
 
 const loginSchema = new mongoose.Schema({
     username: String,
-    password: String,
+    emoji: String,
+    color: String,
     phonenumber: Number,
 });
 
