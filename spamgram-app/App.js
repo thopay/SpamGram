@@ -8,136 +8,255 @@ import NewPostScreen from "./screens/NewPostScreen";
 import AuthScreen from "./screens/AuthScreen";
 import { useEffect, useState } from "react";
 import VerifyScreen from "./screens/VerifyScreen";
+import axios from "axios";
 
 const Stack = createNativeStackNavigator();
 const authStack = createNativeStackNavigator();
 
 export default function App() {
+    const getAddress = async (username) => {
+        let { status } = await Location.requestForegroundPermissionsAsync();
 
-    const getAddress = async () => {
-      let { status } = await Location.requestForegroundPermissionsAsync()
-
-      if (status !== "granted") {
-          alert("Location permissions denied!")
-          return
-      }
-
-      const userLocation = await Location.getCurrentPositionAsync({})
-      setLocation(userLocation)
-
-      let userAdress = await Location.reverseGeocodeAsync({
-          latitude: userLocation.coords.latitude,
-          longitude: userLocation.coords.longitude,
-      })
-      setAddress(userAdress[0])
-    }
-
-    useEffect(async () => {
-      getAddress()
-    }, []);
-
-    const [authenticated, setAuthenticated] = useState(false)
-    const [user, setUser] = useState({})
-    const [location, setLocation] = useState([])
-    const [address, setAddress] = useState([])
-    const [phone, setPhone] = useState('')
-
-    const [posts, setPosts] = useState([
-        {
-            id: 0,
-            text: "I'm in love with Chris Evans",
-            author: "RedRat19",
-            authorColor: "#FDCFCF",
-            authorEmoji: "🐭",
-            timestamp: 1648776191534,
-            votes: 0,
-            comments: 0
-        },
-        {
-            id: 1,
-            text: "oh yeah oh yeah oh yeah oh yeah oh yeah oh yehjf ljfsflkjlkjff",
-            author: "BlueFox78",
-            authorColor: "#CFE1FD",
-            authorEmoji: "🦊",
-            timestamp: 1648776191534,
-            votes: 0,
-            comments: 0
-        },
-        {
-            id: 2,
-            text: "Who tryna meet in Beardshear rn??",
-            author: "GreenGorilla9",
-            authorColor: "#D0FDCF",
-            authorEmoji: "🦍",
-            timestamp: 1648776191534,
-            votes: 0,
-            comments: 0
+        if (status !== "granted") {
+            alert("Location permissions denied!");
+            return;
         }
-    ]);
+
+        let userLocation = null;
+        try {
+            userLocation = await Location.getCurrentPositionAsync({});
+        } catch (e) {
+            await new Promise((r) => setTimeout(r, 5000));
+            userLocation = await Location.getCurrentPositionAsync({});
+        }
+
+        setLoadingData(false);
+        fetchPosts(userLocation.coords.latitude, userLocation.coords.longitude, username);
+        setLocation(userLocation);
+
+        let userAdress = null
+        try {
+            userAdress = await Location.reverseGeocodeAsync({
+                latitude: userLocation.coords.latitude,
+                longitude: userLocation.coords.longitude,
+            });
+        } catch (e) {
+            await new Promise((r) => setTimeout(r, 5000));
+            userAdress = await Location.reverseGeocodeAsync({
+                latitude: userLocation.coords.latitude,
+                longitude: userLocation.coords.longitude,
+            });
+        }
+        setAddress(userAdress[0]);
+    };
+
+    const fetchPosts = (latitude = null, longitude = null, username = null) => {
+        try {
+            if (username == null) {
+                username = user.name
+            }
+            axios({
+                method: "GET",
+                url: `https://spamgram.herokuapp.com/api/post?lat=${
+                    latitude == null ? location.coords.latitude : latitude
+                }&long=${
+                    longitude == null ? location.coords.longitude : longitude
+                }`,
+            }).then((response) => {
+                if (response.status == 200) {
+                    let posts = [];
+                    response.data.forEach((post) => {
+                        if (post.likedBy.includes(username)) {
+                            posts.push({
+                                id: post._id,
+                                text: post.message,
+                                author: post.creator,
+                                timestamp: post.createdAt,
+                                authorColor: post.creatorColor,
+                                authorEmoji: post.creatorEmoji,
+                                votes: post.likeCount,
+                                comments: post.comments,
+                                rating: 1,
+                            });
+                        } else if (post.dislikedBy.includes(username)) {
+                            posts.push({
+                                id: post._id,
+                                text: post.message,
+                                author: post.creator,
+                                timestamp: post.createdAt,
+                                authorColor: post.creatorColor,
+                                authorEmoji: post.creatorEmoji,
+                                votes: post.likeCount,
+                                comments: post.comments,
+                                rating: 0,
+                            });
+                        } else {
+                            posts.push({
+                                id: post._id,
+                                text: post.message,
+                                author: post.creator,
+                                timestamp: post.createdAt,
+                                authorColor: post.creatorColor,
+                                authorEmoji: post.creatorEmoji,
+                                votes: post.likeCount,
+                                comments: post.comments,
+                                rating: -1,
+                            });
+                        }
+                    });
+                    setPosts(posts);
+                    return;
+                }
+            });
+        } catch (e) {
+            console.log(e);
+            return;
+        }
+    };
+
+    const addPost = (message) => {
+        let newPost = {
+            message,
+            creator: user.name,
+            userid: user.id,
+            long: location.coords.longitude,
+            lat: location.coords.latitude,
+            creatorEmoji: user.emoji,
+            creatorColor: user.color,
+            createdAt: Date.now(),
+            comments: 0
+        };
+        const encodeGetParams = (p) =>
+            Object.entries(p)
+                .map((kv) => kv.map(encodeURIComponent).join("="))
+                .join("&");
+        axios
+            .post(
+                `https://spamgram.herokuapp.com/api/post?` +
+                    encodeGetParams(newPost)
+            )
+            .then((response) => {
+                if (response.status == 200) {
+                    setPosts([
+                        ...posts,
+                        {
+                            id: response.data._id,
+                            text: response.data.message,
+                            author: response.data.creator,
+                            timestamp: response.data.createdAt,
+                            authorColor: response.data.creatorColor,
+                            authorEmoji: response.data.creatorEmoji,
+                            votes: response.data.likeCount,
+                            comments: response.data.comments,
+                            rating: -1,
+                        },
+                    ]);
+                    return;
+                }
+            });
+    };
+
+    const [authenticated, setAuthenticated] = useState(false);
+    const [user, setUser] = useState({});
+    const [location, setLocation] = useState({});
+    const [address, setAddress] = useState([]);
+    const [phone, setPhone] = useState("");
+    const [loadingData, setLoadingData] = useState(true);
+
+    const [posts, setPosts] = useState([]);
 
     if (authenticated == true) {
-      return (
-        <NavigationContainer>
-            <Stack.Navigator>
-                <Stack.Screen
-                    name="Home"
-                    options={{
-                        headerShown: false,
-                    }}
-                >
-                    {() => <HomeScreen posts={posts} setPosts={setPosts} address={address} user={user} />}
-                </Stack.Screen>
-                <Stack.Screen
-                    name="Chat"
-                    component={ChatScreen}
-                    options={{
-                        headerShown: false,
-                    }}
-                />
-                <Stack.Screen
-                    name="Post"
-                    component={PostScreen}
-                    options={{
-                        headerShown: false,
-                    }}
-                />
-                <Stack.Screen
-                    name="NewPost"
-                    options={{
-                        headerShown: false,
-                        presentation: "transparentModal",
-                        cardOverlayEnabled: true,
-                        gestureEnabled: true,
-                        gestureDirection: "vertical",
-                    }}
-                >
-                    {() => <NewPostScreen posts={posts} setPosts={setPosts} user={user} />}
-                </Stack.Screen>
-            </Stack.Navigator>
-        </NavigationContainer>
-      );
+        return (
+            <NavigationContainer>
+                <Stack.Navigator>
+                    <Stack.Screen
+                        name="Home"
+                        options={{
+                            headerShown: false,
+                        }}
+                    >
+                        {() => (
+                            <HomeScreen
+                                posts={posts}
+                                addPost={addPost}
+                                address={address}
+                                user={user}
+                                fetchPosts={fetchPosts}
+                                loadingData={loadingData}
+                            />
+                        )}
+                    </Stack.Screen>
+                    <Stack.Screen
+                        name="Chat"
+                        component={ChatScreen}
+                        options={{
+                            headerShown: false,
+                        }}
+                    />
+                    <Stack.Screen
+                        name="Post"
+                        component={PostScreen}
+                        options={{
+                            headerShown: false,
+                        }}
+                    />
+                    <Stack.Screen
+                        name="NewPost"
+                        options={{
+                            headerShown: false,
+                            presentation: "transparentModal",
+                            cardOverlayEnabled: true,
+                            gestureEnabled: true,
+                            gestureDirection: "vertical",
+                        }}
+                    >
+                        {() => (
+                            <NewPostScreen
+                                posts={posts}
+                                addPost={addPost}
+                                user={user}
+                            />
+                        )}
+                    </Stack.Screen>
+                </Stack.Navigator>
+            </NavigationContainer>
+        );
     } else {
-      return (
-        <NavigationContainer>
-            <authStack.Navigator>
-                <authStack.Screen
-                    name="AuthScreen"
-                    options={{
-                        headerShown: false,
-                    }}
-                >
-                    {() => <AuthScreen setAuthenticated={setAuthenticated} phone={phone} setPhone={setPhone} />}
-                </authStack.Screen>
-                <authStack.Screen
-                    name="Verify"
-                    options={{
-                        headerShown: false,
-                    }}
-                >
-                    {() => <VerifyScreen setAuthenticated={setAuthenticated} setUser={setUser} phone={phone} />}
-                </authStack.Screen>
-            </authStack.Navigator>
-        </NavigationContainer>
-      )
+        return (
+            <NavigationContainer>
+                <authStack.Navigator>
+                    <authStack.Screen
+                        name="AuthScreen"
+                        options={{
+                            headerShown: false,
+                        }}
+                    >
+                        {() => (
+                            <AuthScreen
+                                setAuthenticated={setAuthenticated}
+                                phone={phone}
+                                setPhone={setPhone}
+                                getAddress={getAddress}
+                            />
+                        )}
+                    </authStack.Screen>
+                    <authStack.Screen
+                        name="Verify"
+                        options={{
+                            headerShown: false,
+                        }}
+                    >
+                        {() => (
+                            <VerifyScreen
+                                setAuthenticated={setAuthenticated}
+                                setUser={setUser}
+                                phone={phone}
+                                getAddress={getAddress}
+                            />
+                        )}
+                    </authStack.Screen>
+                </authStack.Navigator>
+            </NavigationContainer>
+        );
     }
 }

@@ -3,19 +3,42 @@ import { RFValue } from "react-native-responsive-fontsize";
 import moment from "moment";
 import Avatar from "./Avatar";
 import VoteContainer from "./VoteContainer";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { LogBox } from "react-native";
+import axios from "axios";
 
 LogBox.ignoreLogs([
     "Non-serializable values were found in the navigation state",
 ]);
 
 function PostCard(props) {
-    const [pressed, setPressed] = useState(-1);
+    useEffect(() => {
+        setPressed(props.data.rating)
+    }, [props.data.rating])
+
+    useEffect(() => {
+        setVotes(props.data.votes)
+    }, [props.data.votes])
+
+    useEffect(() => {
+        setPressed(props.data.rating)
+        setVotes(props.data.votes)
+    }, [props])
+
+    const [pressed, setPressed] = useState(props.data.rating);
     const [votes, setVotes] = useState(props.voteUtils.getVotes(props.data.id));
     const user = props.user
 
+    const like = () => {
+        axios.get(`https://spamgram.herokuapp.com/api/post/likePost?id=${props.data.id}&user=${user.name}`)
+    }
+
+    const dislike = () => {
+        axios.get(`https://spamgram.herokuapp.com/api/post/dislikePost?id=${props.data.id}&user=${user.name}`)
+    }
+
     const upvote = () => {
+        like();
         if (pressed == -1) {
             setVotes(votes + 1);
             setPressed(1);
@@ -29,6 +52,7 @@ function PostCard(props) {
     };
 
     const downvote = () => {
+        dislike();
         if (pressed == -1) {
             setVotes(votes - 1);
             setPressed(0);

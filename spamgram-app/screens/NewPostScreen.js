@@ -17,7 +17,7 @@ const { width: SCREEN_WIDTH, height: SCREEN_HEIGHT } = Dimensions.get("window");
 export default function PostScreen(props) {
 
 	const posts = props.posts
-    const setPosts = props.setPosts
+    const addPost = props.addPost
 	const user = props.user
 
 	const [backPressed, setBackPressed] = useState(false);
@@ -28,19 +28,7 @@ export default function PostScreen(props) {
 
     function sendPost() {
         if (text != "" && text != null) {
-            setPosts([
-                ...posts,
-                {
-                    id: posts.length + 1,
-                    text,
-                    author: user.name,
-                    timestamp: Date.now(),
-					authorColor: user.color,
-					authorEmoji: user.emoji,
-					votes: 0,
-					comments: 0
-                },
-            ]);
+			addPost(text)
             setText();
 			navigation.goBack()
         }

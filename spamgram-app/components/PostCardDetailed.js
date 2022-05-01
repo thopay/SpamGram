@@ -2,12 +2,13 @@ import { View, Text, TouchableHighlight } from "react-native";
 import { RFValue } from "react-native-responsive-fontsize";
 import { AntDesign } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Avatar from "./Avatar";
 import VoteContainer from "./VoteContainer";
 import CommentSection from "./CommentSection";
 import CommentInput from "./CommentInput";
 import moment from "moment";
+import axios from "axios";
 
 function PostCardDetailed(props) {
     const post = props.props.route.params.post;
@@ -17,6 +18,52 @@ function PostCardDetailed(props) {
     const [sharePressed, setSharePressed] = useState(false);
     const [focused, setFocused] = useState(false);
     const [comments, setComments] = useState([]);
+
+
+    const addComment = (text) => {
+        const encodeGetParams = (p) => Object.entries(p).map((kv) => kv.map(encodeURIComponent).join("=")).join("&");
+        axios.post(`https://spamgram.herokuapp.com/api/post/comment?` + encodeGetParams({
+            postid: post.id,
+            message: text,
+            creator: user.name,
+            createdAt: Date.now(),
+        }))
+        .then((response) => {
+            setComments([
+                ...comments,
+                {
+                    id: response.data._id,
+                    text: response.data.message,
+                    author: response.data.creator,
+                    timestamp: response.data.createdAt,
+                },
+            ]);
+        })
+    }
+
+    const fetchComments = () => {
+        axios({
+            method: "GET",
+            url: `https://spamgram.herokuapp.com/api/post/comment?id=${post.id}`,
+        }).then((response) => {
+            if (response.data.length != 0) {
+                let comments = []
+                response.data.forEach(comment => {
+                    comments.push({
+                        id: comment._id,
+                        text: comment.message,
+                        author: comment.creator,
+                        timestamp: comment.createdAt,
+                    })
+                })
+                setComments(comments)
+            }
+        })
+    }
+
+    useEffect(() => {
+        fetchComments()
+    }, [])
 
     const [detailedPressed, setDetailedPressed] = useState(
         props.props.route.params.pressed
@@ -250,6 +297,7 @@ function PostCardDetailed(props) {
                 setComments={setComments}
                 setFocused={setFocused}
                 user={user}
+                addComment={addComment}
             />
         </View>
     );

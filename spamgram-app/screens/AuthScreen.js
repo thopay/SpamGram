@@ -13,7 +13,7 @@ import { useNavigation } from "@react-navigation/native";
 
 const { width: SCREEN_WIDTH, height: SCREEN_HEIGHT } = Dimensions.get("window");
 
-function AuthScreen({ setAuthenticated, phone, setPhone }) {
+function AuthScreen({ setAuthenticated, phone, setPhone, getAddress }) {
 
 	const navigation = useNavigation();
 

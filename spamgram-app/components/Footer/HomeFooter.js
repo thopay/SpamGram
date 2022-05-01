@@ -9,7 +9,7 @@ import { AntDesign } from "@expo/vector-icons";
 import { useState } from "react";
 import { useNavigation } from "@react-navigation/native";
 
-function HomeFooter({ screen, setScreen }) {
+function HomeFooter({ screen, setScreen, allowChat }) {
     const navigation = useNavigation();
 
     return (
@@ -31,25 +31,29 @@ function HomeFooter({ screen, setScreen }) {
                         }
                         style={{
                             top: -10,
-                            marginRight: 30,
+                            marginRight: allowChat ? 30 : 0,
                         }}
                     />
                 </TouchableWithoutFeedback>
-                <TouchableWithoutFeedback
-                    onPress={() => setScreen(1)}
-                >
-                    <AntDesign
-                        name="message1"
-                        size={40}
-                        color={
-                            screen == 1 ? "white" : "rgba(255, 255, 255, 0.25)"
-                        }
-                        style={{
-                            top: -10,
-                            marginLeft: 30,
-                        }}
-                    />
-                </TouchableWithoutFeedback>
+                <View style={{
+                    display: allowChat ? '' : 'none'
+                }}>
+                    <TouchableWithoutFeedback
+                        onPress={() => setScreen(1)}
+                    >
+                        <AntDesign
+                            name="message1"
+                            size={40}
+                            color={
+                                screen == 1 ? "white" : "rgba(255, 255, 255, 0.25)"
+                            }
+                            style={{
+                                top: -10,
+                                marginLeft: 30,
+                            }}
+                        />
+                    </TouchableWithoutFeedback>
+                </View>
             </View>
         </View>
     );

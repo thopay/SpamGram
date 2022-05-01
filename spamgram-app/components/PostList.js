@@ -8,15 +8,14 @@ import {
 import { RFValue } from "react-native-responsive-fontsize";
 import PostCard from "./PostCard";
 
-function PostList({ posts, setPosts, navigation, voteUtils, user }) {
+function PostList({ posts, addPost, navigation, voteUtils, user, fetchPosts }) {
 
     const [refreshing, setRefreshing] = useState(false)
 
     const _onRefresh = () => {
         setRefreshing(true)
-        setTimeout(function() {
-            setRefreshing(false)
-        }, 1000)
+        fetchPosts()
+        setRefreshing(false)
     }
 
     return (
@@ -50,7 +49,6 @@ function PostList({ posts, setPosts, navigation, voteUtils, user }) {
                     marginBottom: RFValue(65, 926),
                 }}
                 contentContainerStyle={{
-                    justifyContent: "flex-end",
                     flexGrow: 1,
                 }}
             />

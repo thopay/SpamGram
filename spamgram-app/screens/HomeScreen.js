@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
     Text,
     View,
@@ -6,6 +6,7 @@ import {
     Image,
     StyleSheet,
     Dimensions,
+    ActivityIndicator
 } from "react-native";
 import { RFValue } from "react-native-responsive-fontsize";
 import HomeFooter from "../components/Footer/HomeFooter";
@@ -70,15 +71,23 @@ const states = {
 
 export default function HomeScreen(props) {
     const posts = props.posts
-    const setPosts = props.setPosts
+    const addPost = props.addPost
     const address = props.address
     const user = props.user
+    const fetchPosts = props.fetchPosts
+    const loadingData = props.loadingData
 
     const navigation = useNavigation();
 
     const [screen, setScreen] = useState(0)
 
-    console.log(address.region)
+    const [allowChat, setAllowChat] = useState(false)
+
+    useEffect(() => {
+        if (Object.keys(address).length != 0) {
+            setAllowChat(true)
+        }
+    }, [address])
 
     const updateVotes = (id, value) => {
         let newPosts = posts.map((post) => {
@@ -87,7 +96,7 @@ export default function HomeScreen(props) {
             }
             return post;
         });
-        setPosts(newPosts);
+        setPosts(newPosts); // TODO HANDLE UPVOTE
     };
 
     const getVotes = (id) => {
@@ -109,14 +118,26 @@ export default function HomeScreen(props) {
                         flex: 1,
                         alignItems: "center",
                         justifyContent: "center",
+                        display: !loadingData
+                    }}
+                ><ActivityIndicator size="large" color="#fff" />
+                <Text style={{color: '#fff'}}>Fetching your data...</Text></View>
+                <View
+                    style={{
+                        flex: 1,
+                        alignItems: "center",
+                        justifyContent: "center",
+                        display: loadingData
                     }}
                 >
+                    
                     <PostList
                         posts={posts}
-                        setPosts={setPosts}
+                        addPost={addPost}
                         navigation={navigation}
                         voteUtils={{ updateVotes, getVotes }}
                         user={user}
+                        fetchPosts={fetchPosts}
                     />
                 </View>
             </View>
@@ -135,7 +156,7 @@ export default function HomeScreen(props) {
                     }}
                 >
                     <View style={styles.headSection}>
-                        <Text style={styles.header}>Welcome {user.name}!</Text>
+                        <Text style={styles.header}>Hello {user.name}!</Text>
                         <Image source={require("../assets/star.png")} style={{
                             margin: RFValue(10, 926)
                         }}/>
@@ -146,7 +167,7 @@ export default function HomeScreen(props) {
                             title: 'Iowa State University' + ", " + address.region,
                             user
                         })}
-                            style={styles.menuOption}
+                            style={[styles.menuOption, { borderColor: user.color }]}
                             underlayColor={"#000"}>
                             <Text style={styles.menuOptionText}>
                                 Iowa State University{ ", " + address.region }
@@ -156,7 +177,7 @@ export default function HomeScreen(props) {
                             title: address.city + ", " + address.region,
                             user
                         })}
-                            style={styles.menuOption}
+                            style={[styles.menuOption, { borderColor: user.color }]}
                             underlayColor={"#000"}>
                             <Text style={styles.menuOptionText}>{ address.city + ", " + address.region }</Text>
                         </TouchableHighlight>
@@ -164,7 +185,7 @@ export default function HomeScreen(props) {
                             title: states[address.region],
                             user
                         })}
-                            style={styles.menuOption}
+                            style={[styles.menuOption, { borderColor: user.color }]}
                             underlayColor={"#000"}>
                             <Text style={styles.menuOptionText}>{ states[address.region] }</Text>
                         </TouchableHighlight>
@@ -172,7 +193,7 @@ export default function HomeScreen(props) {
                 </View>
                 <HomeFooter />
             </View>
-            <HomeFooter screen={screen} setScreen={setScreen} />
+            <HomeFooter screen={screen} setScreen={setScreen} allowChat={allowChat} />
         </>
         
     );
@@ -200,7 +221,6 @@ const styles = StyleSheet.create({
         margin: RFValue(12, 926),
         backgroundColor: "#1D1E21",
         width: (399 / 428) * SCREEN_WIDTH,
-        borderColor: "#FCCFFD",
         borderWidth: 1,
         borderRadius: 15,
     },

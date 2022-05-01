@@ -15,7 +15,7 @@ import axios from 'axios';
 
 const { width: SCREEN_WIDTH, height: SCREEN_HEIGHT } = Dimensions.get("window");
 
-function VerifyScreen({ setAuthenticated, setUser, phone }) {
+function VerifyScreen({ setAuthenticated, setUser, phone, getAddress }) {
 
 	const [code, setCode] = useState('')
 	const [loading, setLoading] = useState(false)
@@ -31,18 +31,47 @@ function VerifyScreen({ setAuthenticated, setUser, phone }) {
 
 	const checkCode = () => {
 		setLoading(true)
+		// axios({
+		// 	method: 'GET',
+		// 	url: `https://spamgram.herokuapp.com/api/signup?phonenumber=${phone}`,
+		// }).then((response) => {
+		// 	if (response.status == 200) {
+		// 		if (response.data.new_user == true) {
+		// 			console.log("New User!")
+		// 		}
+		// 		setUser({
+		// 			id: response.data._id,
+		// 			name: response.data.username,
+		// 			color: `#${response.data.color}`,
+		// 			emoji: response.data.emoji
+		// 		})
+		// 		getAddress(response.data.username)
+		// 		setAuthenticated(true)
+		// 	}
+		// })
 		axios({
 			method: 'GET',
 			url: `https://spamgramotp.herokuapp.com/verify?phonenumber=${phone}&code=${code}`,
 		}).then((response) => {
 			if (response.data.data.valid) {
-				setAuthenticated(true)
-				setUser({
-					id: 0,
-					name: 'RedFox4',
-					color: '#FCCFFD',
-					emoji: '🦊'
+				axios({
+					method: 'GET',
+					url: `https://spamgram.herokuapp.com/api/signup?phonenumber=${phone}`,
+				}).then((response) => {
+					if (response.status == 200) {
+						if (response.data.new_user == true) {
+							console.log("New User!")
+						}
+						setUser({
+							id: response.data._id,
+							name: response.data.username,
+							color: `#${response.data.color}`,
+							emoji: response.data.emoji
+						})
+						setAuthenticated(true)
+					}
 				})
+				
 			} else {
 				setLoading(false)
 			}
