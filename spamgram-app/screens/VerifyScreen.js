@@ -68,6 +68,7 @@ function VerifyScreen({ setAuthenticated, setUser, phone, getAddress }) {
 							color: `#${response.data.color}`,
 							emoji: response.data.emoji
 						})
+						getAddress(response.data.username)
 						setAuthenticated(true)
 					}
 				})

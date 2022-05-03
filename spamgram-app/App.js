@@ -23,6 +23,7 @@ export default function App() {
         }
 
         let userLocation = null;
+        setLoadingStatus('Fetching location...')
         try {
             userLocation = await Location.getCurrentPositionAsync({});
         } catch (e) {
@@ -30,7 +31,7 @@ export default function App() {
             userLocation = await Location.getCurrentPositionAsync({});
         }
 
-        setLoadingData(false);
+        
         fetchPosts(userLocation.coords.latitude, userLocation.coords.longitude, username);
         setLocation(userLocation);
 
@@ -47,6 +48,12 @@ export default function App() {
                 longitude: userLocation.coords.longitude,
             });
         }
+        let resp = await axios({
+            method: "GET",
+            url: `https://spamgram.herokuapp.com/api/colleges?state=${userAdress[0].region}&city=${userAdress[0].city}&lat=${userLocation.coords.latitude}&lon=${userLocation.coords.longitude}`,
+        })
+        setUniversity(`${resp.data.Name}, ${resp.data.State}`)
+        setLoadingData(false);
         setAddress(userAdress[0]);
     };
 
@@ -162,6 +169,8 @@ export default function App() {
     const [address, setAddress] = useState([]);
     const [phone, setPhone] = useState("");
     const [loadingData, setLoadingData] = useState(true);
+    const [loadingStatus, setLoadingStatus] = useState('Fetching profile...');
+    const [university, setUniversity] = useState('')
 
     const [posts, setPosts] = useState([]);
 
@@ -183,6 +192,8 @@ export default function App() {
                                 user={user}
                                 fetchPosts={fetchPosts}
                                 loadingData={loadingData}
+                                loadingStatus={loadingStatus}
+                                university={university}
                             />
                         )}
                     </Stack.Screen>

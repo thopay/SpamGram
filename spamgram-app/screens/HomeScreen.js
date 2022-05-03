@@ -76,6 +76,8 @@ export default function HomeScreen(props) {
     const user = props.user
     const fetchPosts = props.fetchPosts
     const loadingData = props.loadingData
+    const loadingStatus = props.loadingStatus
+    const university = props.university
 
     const navigation = useNavigation();
 
@@ -121,7 +123,7 @@ export default function HomeScreen(props) {
                         display: !loadingData
                     }}
                 ><ActivityIndicator size="large" color="#fff" />
-                <Text style={{color: '#fff'}}>Fetching your data...</Text></View>
+                <Text style={{color: '#fff'}}>{loadingStatus}</Text></View>
                 <View
                     style={{
                         flex: 1,
@@ -164,13 +166,13 @@ export default function HomeScreen(props) {
                     </View>
                     <View>
                         <TouchableHighlight onPress={() => navigation.navigate("Chat", {
-                            title: 'Iowa State University' + ", " + address.region,
+                            title: university,
                             user
                         })}
                             style={[styles.menuOption, { borderColor: user.color }]}
                             underlayColor={"#000"}>
                             <Text style={styles.menuOptionText}>
-                                Iowa State University{ ", " + address.region }
+                                {university}
                             </Text>
                         </TouchableHighlight>
                         <TouchableHighlight onPress={() => navigation.navigate("Chat", {
