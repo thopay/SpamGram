@@ -123,7 +123,7 @@ export const dislikePost = async (req, res) => {
 }
 
 function closeTo(post, user) {
-    const CLOSE_TO_CONSTANT = 10;
+    const CLOSE_TO_CONSTANT = 0.08;
     if (post === null || user === null) return false;
     if (Math.abs(user - post) < CLOSE_TO_CONSTANT) return true;
     return false;
