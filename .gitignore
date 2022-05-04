@@ -1,3 +1,5 @@
 phoneVerification/node_modules
+./messageHandling
 messageHandling/
 phoneVerification/config.js
+.DS_Store
