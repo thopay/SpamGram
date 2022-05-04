@@ -1,15 +1,11 @@
 import { useRef } from "react";
-import {
-    Dimensions,
-    SafeAreaView,
-    FlatList,
-} from "react-native";
+import { Dimensions, SafeAreaView, FlatList } from "react-native";
 import { RFValue } from "react-native-responsive-fontsize";
 import ChatMessage from "./ChatMessage";
 
 const { width: SCREEN_WIDTH, height: SCREEN_HEIGHT } = Dimensions.get("window");
 
-function Chat({ messages, setMessages, focused }) {
+function Chat({ messages, focused }) {
     const scrollRef = useRef();
 
     return (

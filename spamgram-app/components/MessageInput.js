@@ -9,14 +9,14 @@ import { RFValue } from "react-native-responsive-fontsize";
 import { Feather } from "@expo/vector-icons";
 import { useState } from "react";
 
-function MessageInput({ setFocused, user, socket, allowSend }) {
+function MessageInput({ setFocused, socket, allowSend }) {
     const [pressed, setPressed] = useState(false);
 
     const [text, setText] = useState();
 
     function sendMessage() {
         if (text != "" && text != null) {
-            socket.emit('chatMessage', text)
+            socket.emit("chatMessage", text);
             setText();
         }
     }

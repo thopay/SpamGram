@@ -1,11 +1,7 @@
-import {
-    Dimensions,
-    SafeAreaView,
-    FlatList,
-} from "react-native";
+import { SafeAreaView, FlatList } from "react-native";
 import Comment from "./Comment";
 
-function CommentSection({ comments, setComments }) {
+function CommentSection({ comments }) {
     return (
         <SafeAreaView
             style={{

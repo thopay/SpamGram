@@ -13,29 +13,33 @@ LogBox.ignoreLogs([
 
 function PostCard(props) {
     useEffect(() => {
-        setPressed(props.data.rating)
-    }, [props.data.rating])
+        setPressed(props.data.rating);
+    }, [props.data.rating]);
 
     useEffect(() => {
-        setVotes(props.data.votes)
-    }, [props.data.votes])
+        setVotes(props.data.votes);
+    }, [props.data.votes]);
 
     useEffect(() => {
-        setPressed(props.data.rating)
-        setVotes(props.data.votes)
-    }, [props])
+        setPressed(props.data.rating);
+        setVotes(props.data.votes);
+    }, [props]);
 
     const [pressed, setPressed] = useState(props.data.rating);
     const [votes, setVotes] = useState(props.voteUtils.getVotes(props.data.id));
-    const user = props.user
+    const user = props.user;
 
     const like = () => {
-        axios.get(`https://spamgram.herokuapp.com/api/post/likePost?id=${props.data.id}&user=${user.name}`)
-    }
+        axios.get(
+            `https://spamgram.herokuapp.com/api/post/likePost?id=${props.data.id}&user=${user.name}`
+        );
+    };
 
     const dislike = () => {
-        axios.get(`https://spamgram.herokuapp.com/api/post/dislikePost?id=${props.data.id}&user=${user.name}`)
-    }
+        axios.get(
+            `https://spamgram.herokuapp.com/api/post/dislikePost?id=${props.data.id}&user=${user.name}`
+        );
+    };
 
     const upvote = () => {
         like();
@@ -74,7 +78,7 @@ function PostCard(props) {
                     upvote,
                     downvote,
                     pressed,
-                    user
+                    user,
                 })
             }
         >
@@ -175,7 +179,11 @@ function PostCard(props) {
                                         fontSize: RFValue(18, 926),
                                     }}
                                 >
-                                    {props.data.comments == 0 ? '0 Comments' : (props.data.comments == 1 ? '1 Comment' : props.data.comments + ' Comments')}
+                                    {props.data.comments == 0
+                                        ? "0 Comments"
+                                        : props.data.comments == 1
+                                        ? "1 Comment"
+                                        : props.data.comments + " Comments"}
                                 </Text>
                             </View>
                         </View>

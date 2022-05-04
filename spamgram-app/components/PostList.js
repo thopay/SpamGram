@@ -1,34 +1,29 @@
 import { useState } from "react";
-import {
-    Dimensions,
-    SafeAreaView,
-    FlatList,
-    RefreshControl
-} from "react-native";
+import { SafeAreaView, FlatList, RefreshControl } from "react-native";
 import { RFValue } from "react-native-responsive-fontsize";
 import PostCard from "./PostCard";
 
-function PostList({ posts, addPost, navigation, voteUtils, user, fetchPosts }) {
-
-    const [refreshing, setRefreshing] = useState(false)
+function PostList({ posts, navigation, voteUtils, user, fetchPosts }) {
+    const [refreshing, setRefreshing] = useState(false);
 
     const _onRefresh = () => {
-        setRefreshing(true)
-        fetchPosts()
-        setRefreshing(false)
-    }
+        setRefreshing(true);
+        fetchPosts();
+        setRefreshing(false);
+    };
 
     return (
         <SafeAreaView style={{}}>
             <FlatList
                 data={posts.sort((a, b) => {
-                    return b.timestamp - a.timestamp
+                    return b.timestamp - a.timestamp;
                 })}
                 refreshControl={
-                    <RefreshControl 
-                        refreshing={refreshing} 
+                    <RefreshControl
+                        refreshing={refreshing}
                         onRefresh={_onRefresh}
-                        tintColor="#fff"/>
+                        tintColor="#fff"
+                    />
                 }
                 renderItem={(post) => {
                     return (

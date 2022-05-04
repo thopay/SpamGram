@@ -1,15 +1,11 @@
 import { useState } from "react";
-import {
-    View,
-    Text,
-    TouchableHighlight,
-} from "react-native";
+import { View, Text, TouchableHighlight } from "react-native";
 import { RFValue } from "react-native-responsive-fontsize";
-import { Entypo } from "@expo/vector-icons";
+import { AntDesign } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
-import Avatar from "../Avatar";
+import Avatar from "./Avatar";
 
-function HomeHeader({ user }) {
+function Chat({ chatRoom, user }) {
     const [pressed, setPressed] = useState(false);
     const navigation = useNavigation();
 
@@ -34,6 +30,30 @@ function HomeHeader({ user }) {
                     flexDirection: "row",
                 }}
             >
+                <TouchableHighlight
+                    onPressIn={() => setPressed(true)}
+                    onPressOut={() => setPressed(false)}
+                    onPress={() => navigation.goBack()}
+                    style={{
+                        backgroundColor: "#000000",
+                        margin: 14,
+                        width: 48,
+                        height: 48,
+                        borderRadius: 15,
+                        justifyContent: "center",
+                        alignItems: "center",
+                        position: "absolute",
+                        bottom: 0,
+                        zIndex: 2,
+                    }}
+                    underlayColor={"#454545"}
+                >
+                    <AntDesign
+                        name="arrowleft"
+                        size={36}
+                        color={pressed ? "black" : "white"}
+                    />
+                </TouchableHighlight>
                 <View
                     style={{
                         display: "flex",
@@ -47,60 +67,44 @@ function HomeHeader({ user }) {
                             flex: 1,
                             flexDirection: "row",
                             width: "100%",
-                            alignItems: "center",
+                            justifyContent: "center",
                         }}
                     >
                         <Avatar
-                            height={48}
-                            width={48}
+                            height={24}
+                            width={24}
                             color={user.color}
                             radius={"50%"}
-                            fontSize={32}
+                            fontSize={12}
                             emoji={user.emoji}
                         />
                         <Text
                             style={{
                                 color: user.color,
                                 textAlign: "center",
-                                fontSize: RFValue(32, 926),
-                                fontWeight: "500",
+                                marginBottom: 10,
+                                fontSize: RFValue(24, 926),
                                 marginLeft: 10,
                             }}
                         >
                             {user.name}
                         </Text>
                     </View>
+                    <Text
+                        style={{
+                            color: "white",
+                            width: "100%",
+                            textAlign: "center",
+                            fontWeight: "700",
+                            fontSize: RFValue(24, 926),
+                        }}
+                    >
+                        {chatRoom.title}
+                    </Text>
                 </View>
-                <TouchableHighlight
-                    onPressIn={() => setPressed(true)}
-                    onPressOut={() => setPressed(false)}
-                    onPress={() => navigation.navigate("NewPost", {
-                        title: "Fart"
-                    })}
-                    style={{
-                        backgroundColor: "#67FF88",
-                        margin: 14,
-                        width: 48,
-                        height: 48,
-                        borderRadius: "50%",
-                        justifyContent: "center",
-                        alignItems: "center",
-                        position: "absolute",
-                        bottom: 0,
-                        right: 5,
-                        zIndex: 2,
-                    }}
-                    underlayColor={"#3C8E4E"}
-                >
-                    <Entypo
-                        name="plus"
-                        size={30}
-                        color={pressed ? "black" : "black"}
-                    />
-                </TouchableHighlight>
             </View>
         </View>
     );
 }
 
-export default HomeHeader;
+export default Chat;

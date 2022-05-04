@@ -9,14 +9,14 @@ import { RFValue } from "react-native-responsive-fontsize";
 import { Feather } from "@expo/vector-icons";
 import { useState } from "react";
 
-function CommentInput({ comments, setComments, setFocused, user, addComment }) {
+function CommentInput({ setFocused, addComment }) {
     const [pressed, setPressed] = useState(false);
 
     const [text, setText] = useState();
 
     function sendComment() {
         if (text != "" && text != null) {
-            addComment(text)
+            addComment(text);
             setText();
         }
     }

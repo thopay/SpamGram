@@ -12,34 +12,40 @@ import axios from "axios";
 
 function PostCardDetailed(props) {
     const post = props.props.route.params.post;
-    const user = props.props.route.params.user
+    const user = props.props.route.params.user;
 
     const [backPressed, setBackPressed] = useState(false);
     const [sharePressed, setSharePressed] = useState(false);
     const [focused, setFocused] = useState(false);
     const [comments, setComments] = useState([]);
 
-
     const addComment = (text) => {
-        const encodeGetParams = (p) => Object.entries(p).map((kv) => kv.map(encodeURIComponent).join("=")).join("&");
-        axios.post(`https://spamgram.herokuapp.com/api/post/comment?` + encodeGetParams({
-            postid: post.id,
-            message: text,
-            creator: user.name,
-            createdAt: Date.now(),
-        }))
-        .then((response) => {
-            setComments([
-                ...comments,
-                {
-                    id: response.data._id,
-                    text: response.data.message,
-                    author: response.data.creator,
-                    timestamp: response.data.createdAt,
-                },
-            ]);
-        })
-    }
+        const encodeGetParams = (p) =>
+            Object.entries(p)
+                .map((kv) => kv.map(encodeURIComponent).join("="))
+                .join("&");
+        axios
+            .post(
+                `https://spamgram.herokuapp.com/api/post/comment?` +
+                    encodeGetParams({
+                        postid: post.id,
+                        message: text,
+                        creator: user.name,
+                        createdAt: Date.now(),
+                    })
+            )
+            .then((response) => {
+                setComments([
+                    ...comments,
+                    {
+                        id: response.data._id,
+                        text: response.data.message,
+                        author: response.data.creator,
+                        timestamp: response.data.createdAt,
+                    },
+                ]);
+            });
+    };
 
     const fetchComments = () => {
         axios({
@@ -47,23 +53,23 @@ function PostCardDetailed(props) {
             url: `https://spamgram.herokuapp.com/api/post/comment?id=${post.id}`,
         }).then((response) => {
             if (response.data.length != 0) {
-                let comments = []
-                response.data.forEach(comment => {
+                let comments = [];
+                response.data.forEach((comment) => {
                     comments.push({
                         id: comment._id,
                         text: comment.message,
                         author: comment.creator,
                         timestamp: comment.createdAt,
-                    })
-                })
-                setComments(comments)
+                    });
+                });
+                setComments(comments);
             }
-        })
-    }
+        });
+    };
 
     useEffect(() => {
-        fetchComments()
-    }, [])
+        fetchComments();
+    }, []);
 
     const [detailedPressed, setDetailedPressed] = useState(
         props.props.route.params.pressed
@@ -290,15 +296,9 @@ function PostCardDetailed(props) {
                     flex: 1,
                 }}
             >
-                <CommentSection comments={comments} setComments={setComments} />
+                <CommentSection comments={comments} />
             </View>
-            <CommentInput
-                comments={comments}
-                setComments={setComments}
-                setFocused={setFocused}
-                user={user}
-                addComment={addComment}
-            />
+            <CommentInput setFocused={setFocused} addComment={addComment} />
         </View>
     );
 }
