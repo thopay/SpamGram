@@ -1,5 +1,5 @@
-phoneVerification/node_modules
+phone-verification/node_modules
 ./messageHandling
 messageHandling/
-phoneVerification/config.js
+phone-verification/config.js
 .DS_Store
