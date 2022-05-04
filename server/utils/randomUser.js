@@ -1,5 +1,4 @@
-import crypto from "crypto";
-const n = crypto.randomInt(0, 1000000);
+import crypto from "crypto"
 
 const adjectives = [
     "aback",
@@ -733,6 +732,7 @@ const animals = [
 ];
 
 const randomName = () => {
+    let n = crypto.randomInt(0, 1000000);
     var nameAdjective = adjectives[n % adjectives.length];
     var nameAnimal = animals[n % animals.length];
     var nameNumber = n % 99;

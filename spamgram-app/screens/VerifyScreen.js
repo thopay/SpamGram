@@ -23,60 +23,60 @@ function VerifyScreen({ setAuthenticated, setUser, phone, getAddress }) {
 
 	useEffect(() => {
 		console.log(`Sending request to get text! ${phone}`)
-		axios({
-			method: 'GET',
-			url: `https://spamgramotp.herokuapp.com/login?phonenumber=${phone}`,
-		})
+		// axios({
+		// 	method: 'GET',
+		// 	url: `https://spamgramotp.herokuapp.com/login?phonenumber=${phone}`,
+		// })
 	}, [])
 
 	const checkCode = () => {
 		setLoading(true)
-		// axios({
-		// 	method: 'GET',
-		// 	url: `https://spamgram.herokuapp.com/api/signup?phonenumber=${phone}`,
-		// }).then((response) => {
-		// 	if (response.status == 200) {
-		// 		if (response.data.new_user == true) {
-		// 			console.log("New User!")
-		// 		}
-		// 		setUser({
-		// 			id: response.data._id,
-		// 			name: response.data.username,
-		// 			color: `#${response.data.color}`,
-		// 			emoji: response.data.emoji
-		// 		})
-		// 		getAddress(response.data.username)
-		// 		setAuthenticated(true)
-		// 	}
-		// })
 		axios({
 			method: 'GET',
-			url: `https://spamgramotp.herokuapp.com/verify?phonenumber=${phone}&code=${code}`,
+			url: `https://spamgram.herokuapp.com/api/signup?phonenumber=${phone}`,
 		}).then((response) => {
-			if (response.data.data.valid) {
-				axios({
-					method: 'GET',
-					url: `https://spamgram.herokuapp.com/api/signup?phonenumber=${phone}`,
-				}).then((response) => {
-					if (response.status == 200) {
-						if (response.data.new_user == true) {
-							console.log("New User!")
-						}
-						setUser({
-							id: response.data._id,
-							name: response.data.username,
-							color: `#${response.data.color}`,
-							emoji: response.data.emoji
-						})
-						getAddress(response.data.username)
-						setAuthenticated(true)
-					}
+			if (response.status == 200) {
+				if (response.data.new_user == true) {
+					console.log("New User!")
+				}
+				setUser({
+					id: response.data._id,
+					name: response.data.username,
+					color: `#${response.data.color}`,
+					emoji: response.data.emoji
 				})
-				
-			} else {
-				setLoading(false)
+				getAddress(response.data.username)
+				setAuthenticated(true)
 			}
-		});
+		})
+		// axios({
+		// 	method: 'GET',
+		// 	url: `https://spamgramotp.herokuapp.com/verify?phonenumber=${phone}&code=${code}`,
+		// }).then((response) => {
+		// 	if (response.data.data.valid) {
+		// 		axios({
+		// 			method: 'GET',
+		// 			url: `https://spamgram.herokuapp.com/api/signup?phonenumber=${phone}`,
+		// 		}).then((response) => {
+		// 			if (response.status == 200) {
+		// 				if (response.data.new_user == true) {
+		// 					console.log("New User!")
+		// 				}
+		// 				setUser({
+		// 					id: response.data._id,
+		// 					name: response.data.username,
+		// 					color: `#${response.data.color}`,
+		// 					emoji: response.data.emoji
+		// 				})
+		// 				getAddress(response.data.username)
+		// 				setAuthenticated(true)
+		// 			}
+		// 		})
+				
+		// 	} else {
+		// 		setLoading(false)
+		// 	}
+		// });
 	}
 
     return (

@@ -12,7 +12,6 @@ export const signup = async (req, res, next) => {
     }
     const userInfo = randomUser();
     const newUser = {...userInfo, phonenumber: body.phonenumber}
-    console.log(newUser)
     const newlogin = new Username(newUser);
     try {
         await newlogin.save();
