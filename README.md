@@ -10,7 +10,7 @@
     <a href="https://github.com/th-ms/SpamGram"><strong>Explore the docs »</strong></a>
     <br />
     <br />
-   <!-- <a href="https://chrome.google.com/webstore/detail/interestupper/ppcendomjiamipgbdhdalloibclamfkn">Demo </a> -->
+    <a href="/#Demo">Demo </a>
     ·
     <a href="https://github.com/th-ms/SpamGram">Report Bug</a>
     ·
@@ -26,9 +26,8 @@
 * [About the Project](#about-the-project)
   * [Built With](#built-with)
 * [Getting Started](#getting-started)
-  * [Prerequisites](#prerequisites)
   * [Installation](#installation)
-* [Usage](#usage)
+* [Demo](#Demo)
 * [Roadmap](#roadmap)
 * [Contributing](#contributing)
 * [License](#license)
@@ -38,15 +37,15 @@
 
 <!-- ABOUT THE PROJECT -->
 ## About The Project
-<img height="500" alt="Home Screen" src="https://user-images.githubusercontent.com/60588709/167019731-b2f3a2b4-caeb-493e-8209-592cd08d8128.png">
+SpamGram takes inspiration from YikYak, but expands on the idea by providing more methods of communication between local users. The primary feature is the local post system which allows users to post status updates or short messages. Users can only see posts from other users within 5 miles. The other main feature is the chat room/group chat that allows users within the area to communicate freely within a group chat.
 
-<img height="500" alt="New Post Screen" src="https://user-images.githubusercontent.com/60588709/167019750-b8883796-656a-4b85-ba45-058dbd9c8a05.png">
-
-<img height="500" alt="Chat Screen" src="https://user-images.githubusercontent.com/60588709/167019759-48e7b4a9-6e07-43e7-a5e1-7314be20df76.png">
-
+SpamGram is written with JavaScript and built with React Native and Expo. The backend/API is an Express server connected to a MongoDB database. 
 
 ### Built With
-* [JavaScript](https://www.javascript.com/)
+* [MongoDB](https://www.mongodb.com/)
+* [Express](https://expressjs.com/)
+* [React Native](https://reactnative.dev/)
+* [NodeJS](https://nodejs.dev/)
 
 
 <!-- GETTING STARTED -->
@@ -54,27 +53,27 @@
 
 To get a local copy up and running follow these simple example steps.
 
-### Prerequisites
-
-* None
-
 ### Installation
 
 1. Clone the repo
 ```sh
 git clone https://github.com/th-ms/SpamGram.git
 ```
-2. Enable Developer Mode in chrome://extensions/
-3. Drag and drop the interestUpper folder onto the webpage
+2. CD into `/app`
+3. Run `npm i` then `expo start`
 
 
 
 <!-- USAGE EXAMPLES -->
-## Usage
+## Demo
 
-To scan a single email, simply open the email in Gmail, open the extension, then click Scan Email.
+<p align="center">
+  <img height="500" alt="Home Screen" src="https://user-images.githubusercontent.com/60588709/167019731-b2f3a2b4-caeb-493e-8209-592cd08d8128.png">
 
-To scan your visible inbox, you need to switch to HTML view on Gmail, which is easily done by following the instruction on the extension. After that, the extension will scan emails looking for keywords related to admissions, then open links from each email.
+  <img height="500" alt="New Post Screen" src="https://user-images.githubusercontent.com/60588709/167019750-b8883796-656a-4b85-ba45-058dbd9c8a05.png">
+
+  <img height="500" alt="Chat Screen" src="https://user-images.githubusercontent.com/60588709/167019759-48e7b4a9-6e07-43e7-a5e1-7314be20df76.png">
+</p>
 
 <!-- ROADMAP -->
 ## Roadmap
@@ -93,13 +92,6 @@ Contributions are what make the open source community such an amazing place to b
 3. Commit your Changes (`git commit -m 'Add some AmazingFeature'`)
 4. Push to the Branch (`git push origin feature/AmazingFeature`)
 5. Open a Pull Request
-
-
-
-<!-- LICENSE -->
-## License
-
-Distributed under the MIT License.
 
 
 
