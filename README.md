@@ -7,12 +7,12 @@
   <p align="center">
     An anonymous, minimalist, location based social media app.
     <br />
-    <a href="https://github.com/th-ms/SpamGram"><strong>Explore the docs »</strong></a>
+    <a href="https://github.com/thopay/SpamGram"><strong>Explore the docs »</strong></a>
     <br />
     <br />
-    <a href="https://github.com/th-ms/SpamGram">Report Bug</a>
+    <a href="https://github.com/thopay/SpamGram">Report Bug</a>
     ·
-    <a href="https://github.com/th-ms/SpamGram">Request Feature</a>
+    <a href="https://github.com/thopay/SpamGram">Request Feature</a>
   </p>
 </p>
 
@@ -55,9 +55,9 @@ To get a local copy up and running follow these simple example steps.
 
 1. Clone the repo
 ```sh
-git clone https://github.com/th-ms/SpamGram.git
+git clone https://github.com/thopay/SpamGram.git
 ```
-2. CD into `/app`
+2. CD into `app`
 3. Run `npm i` then `expo start`
 
 
@@ -76,7 +76,7 @@ git clone https://github.com/th-ms/SpamGram.git
 <!-- ROADMAP -->
 ## Roadmap
 
-See the [open issues](https://github.com/th-ms/SpamGram/issues) for a list of proposed features (and known issues).
+See the [open issues](https://github.com/thopay/SpamGram/issues) for a list of proposed features (and known issues).
 
 
 
@@ -98,4 +98,4 @@ Contributions are what make the open source community such an amazing place to b
 
 Thomas - [@th___mas](https://twitter.com/th___mas) - contact@th-mas.dev
 
-Project Link: [https://github.com/th-ms/SpamGram](https://github.com/th-ms/SpamGram)
+Project Link: [https://github.com/thopay/SpamGram](https://github.com/thopay/SpamGram)
