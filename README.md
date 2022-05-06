@@ -10,8 +10,6 @@
     <a href="https://github.com/th-ms/SpamGram"><strong>Explore the docs »</strong></a>
     <br />
     <br />
-    <a href="/#Demo">Demo </a>
-    ·
     <a href="https://github.com/th-ms/SpamGram">Report Bug</a>
     ·
     <a href="https://github.com/th-ms/SpamGram">Request Feature</a>
